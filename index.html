@@ -1,271 +1,168 @@
-import { useEffect, useState } from "react";
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Animated Clothes</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { font-family: sans-serif; }
+  </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
 
-const UPLOADED_VIDEO = "/mnt/data/WhatsApp Video 2025-11-13 at 05.53.28_4c213f94.mp4"; // local uploaded file path
-
-const INITIAL_PRODUCTS = [
-  { id: 1, name: "Saffron Breeze Abaya", price: 79, category: "Abayas", desc: "Lightweight, breathable fabric with flowing silhouette.", img: "abaya.jpg" },
-  { id: 2, name: "Desert Sunrise Thobe", price: 99, category: "Thobes", desc: "Structured yet comfortable — modern classic.", img: "thobe.jpg" },
-  { id: 3, name: "Noor Embroidered Cape", price: 129, category: "Kaftans", desc: "Decorative embroidery with premium lining.", img: "cape.jpg" },
-  { id: 4, name: "Royal Hijab", price: 29, category: "Hijabs", desc: "Soft fabric with subtle sheen.", img: "hijab.jpg" },
-  { id: 5, name: "Sahara Sand Scarf", price: 19, category: "Accessories", desc: "Light scarf for all seasons.", img: "scarf.jpg" },
-];
-
-export default function AnimatedClothesWebsite() {
-  const [products] = useState(INITIAL_PRODUCTS);
-  const [cart, setCart] = useState(() => {
-    try {
-      return JSON.parse(localStorage.getItem("ac_cart") || "[]");
-    } catch { return []; }
-  });
-  const [query, setQuery] = useState("");
-  const [category, setCategory] = useState("All");
-  const [sort, setSort] = useState("popular");
-  const [selected, setSelected] = useState(null);
-  const [checkoutOpen, setCheckoutOpen] = useState(false);
-  const [orderSuccess, setOrderSuccess] = useState(null);
-
-  useEffect(() => {
-    document.title = "Animated Clothes";
-    const yearEl = document.getElementById("year");
-    if (yearEl) yearEl.textContent = new Date().getFullYear();
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem("ac_cart", JSON.stringify(cart));
-  }, [cart]);
-
-  function addToCart(product) {
-    setCart((c) => {
-      const found = c.find((x) => x.id === product.id);
-      if (found) return c.map((x) => x.id === product.id ? { ...x, qty: x.qty + 1 } : x);
-      return [...c, { ...product, qty: 1 }];
-    });
-  }
-
-  function removeFromCart(id) {
-    setCart((c) => c.filter((x) => x.id !== id));
-  }
-
-  function updateQty(id, qty) {
-    if (qty < 1) return removeFromCart(id);
-    setCart((c) => c.map((x) => x.id === id ? { ...x, qty } : x));
-  }
-
-  const categories = ["All", ...Array.from(new Set(products.map(p => p.category)))];
-
-  const filtered = products.filter(p => {
-    if (category !== "All" && p.category !== category) return false;
-    if (!query) return true;
-    return p.name.toLowerCase().includes(query.toLowerCase()) || p.desc.toLowerCase().includes(query.toLowerCase());
-  }).sort((a,b)=>{
-    if (sort === "price-asc") return a.price - b.price;
-    if (sort === "price-desc") return b.price - a.price;
-    return a.id - b.id;
-  });
-
-  const subtotal = cart.reduce((s, p) => s + p.price * p.qty, 0);
-
-  function handleCheckout(form) {
-    // mock checkout: clear cart and show order success
-    const order = {
-      id: Math.floor(Math.random()*900000)+100000,
-      items: cart,
-      total: subtotal,
-      name: form.name,
-      email: form.email,
-      createdAt: new Date().toISOString(),
-    };
-    setOrderSuccess(order);
-    setCart([]);
-    setCheckoutOpen(false);
-  }
-
-  return (
-    <div className="bg-gray-50 min-h-screen font-sans">
-      {/* HEADER */}
-      <header className="max-w-7xl mx-auto p-4 flex flex-col md:flex-row justify-between items-center gap-4">
-        <div className="flex items-center gap-4">
-          <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-rose-400 to-indigo-500 flex items-center justify-center text-white font-bold">AC</div>
-          <div>
-            <h1 className="text-2xl font-extrabold">Animated Clothes</h1>
-            <p className="text-sm text-gray-500">Heritage-inspired modern wear</p>
-          </div>
-        </div>
-
-        <div className="flex items-center gap-3">
-          <input value={query} onChange={(e)=>setQuery(e.target.value)} placeholder="Search products..." className="border rounded-xl px-3 py-2" />
-          <select value={category} onChange={(e)=>setCategory(e.target.value)} className="border rounded-xl px-3 py-2">
-            {categories.map((c,i)=>(<option key={i} value={c}>{c}</option>))}
-          </select>
-
-          <select value={sort} onChange={(e)=>setSort(e.target.value)} className="border rounded-xl px-3 py-2">
-            <option value="popular">Popular</option>
-            <option value="price-asc">Price: Low to High</option>
-            <option value="price-desc">Price: High to Low</option>
-          </select>
-
-          <button onClick={()=>setCheckoutOpen(true)} className="px-3 py-2 rounded-xl bg-amber-500 text-white font-semibold">Checkout ({cart.length})</button>
-        </div>
-      </header>
-
-      {/* HERO */}
-      <section className="relative h-80 w-full overflow-hidden rounded-xl max-w-7xl mx-auto mt-6">
-        <video src={UPLOADED_VIDEO} autoPlay loop muted className="w-full h-full object-cover"></video>
-        <div className="absolute inset-0 bg-black/40 flex items-center px-8">
-          <div>
-            <h2 className="text-white text-4xl font-bold">Where Heritage Meets Modern Fashion</h2>
-            <p className="text-gray-200 mt-2 max-w-xl">Cinematic cloth visuals, handcrafted styles, and a seamless shopping flow — designed for the modern wardrobe.</p>
-            <div className="mt-4 flex gap-3">
-              <button onClick={()=>{document.getElementById('featured')?.scrollIntoView({behavior:'smooth'})}} className="px-5 py-2 rounded-full bg-white text-black font-semibold">Shop Featured</button>
-              <button onClick={()=>{document.getElementById('categories')?.scrollIntoView({behavior:'smooth'})}} className="px-5 py-2 rounded-full border border-white text-white">Browse Categories</button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <main className="max-w-7xl mx-auto p-6 grid grid-cols-1 lg:grid-cols-4 gap-6 mt-6">
-        {/* LEFT: Product Grid */}
-        <section className="lg:col-span-3">
-          <h2 id="featured" className="text-2xl font-bold mb-4">Products</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-            {filtered.map(p=> (
-              <div key={p.id} className="bg-white p-4 rounded-xl shadow group">
-                <div className="h-44 bg-gray-100 rounded-xl mb-3 flex items-center justify-center"> 
-                  {/* placeholder for product image */}
-                  <span className="text-gray-400">Image</span>
-                </div>
-                <h3 className="font-semibold">{p.name}</h3>
-                <p className="text-sm text-gray-500">{p.desc}</p>
-                <div className="mt-3 flex items-center justify-between">
-                  <div className="font-bold text-lg">${p.price}</div>
-                  <div className="flex gap-2">
-                    <button onClick={()=>{setSelected(p)}} className="px-3 py-1 rounded-xl border">View</button>
-                    <button onClick={()=>addToCart(p)} className="px-3 py-1 rounded-xl bg-purple-600 text-white">Add</button>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* RIGHT: Cart & Summary */}
-        <aside className="bg-white p-4 rounded-xl shadow">
-          <h3 className="font-bold mb-3">Your Cart</h3>
-          <div className="space-y-3">
-            {cart.length === 0 && <div className="text-sm text-gray-500">Cart is empty.</div>}
-            {cart.map(item=> (
-              <div key={item.id} className="flex items-center justify-between">
-                <div>
-                  <div className="font-semibold">{item.name}</div>
-                  <div className="text-sm text-gray-500">${item.price} × {item.qty}</div>
-                </div>
-                <div className="flex items-center gap-2">
-                  <button onClick={()=>updateQty(item.id, item.qty-1)} className="px-2 py-1 border rounded">-</button>
-                  <div className="px-2">{item.qty}</div>
-                  <button onClick={()=>updateQty(item.id, item.qty+1)} className="px-2 py-1 border rounded">+</button>
-                  <button onClick={()=>removeFromCart(item.id)} className="px-2 py-1 text-red-600">✕</button>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div className="mt-4 border-t pt-4">
-            <div className="flex justify-between"><div className="text-sm text-gray-500">Subtotal</div><div className="font-bold">${subtotal.toFixed(2)}</div></div>
-            <button onClick={()=>setCheckoutOpen(true)} disabled={cart.length===0} className={`mt-3 w-full px-4 py-2 rounded-xl font-semibold ${cart.length===0? 'bg-gray-300 text-gray-600':'bg-emerald-500 text-white'}`}>Proceed to Checkout</button>
-          </div>
-
-          <div className="mt-6 text-xs text-gray-400">Secure checkout — mock payment (demo mode)</div>
-        </aside>
-
-      </main>
-
-      {/* CHECKOUT MODAL (simple) */}
-      {checkoutOpen && (
-        <div className="fixed inset-0 bg-black/40 flex items-center justify-center p-4">
-          <div className="bg-white rounded-xl p-6 w-full max-w-md">
-            <h3 className="text-xl font-bold mb-2">Checkout</h3>
-            <CheckoutForm onCancel={()=>setCheckoutOpen(false)} onComplete={handleCheckout} subtotal={subtotal} />
-          </div>
-        </div>
-      )}
-
-      {/* PRODUCT DETAIL MODAL */}
-      {selected && (
-        <div className="fixed inset-0 bg-black/40 flex items-center justify-center p-4">
-          <div className="bg-white rounded-xl p-6 w-full max-w-2xl">
-            <div className="flex justify-between items-start">
-              <h3 className="text-2xl font-bold">{selected.name}</h3>
-              <button onClick={()=>setSelected(null)} className="text-gray-500">✕</button>
-            </div>
-            <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="h-64 bg-gray-100 rounded-xl flex items-center justify-center">Image</div>
-              <div>
-                <p className="text-gray-600">{selected.desc}</p>
-                <div className="mt-4 font-bold text-2xl">${selected.price}</div>
-                <div className="mt-4 flex gap-3">
-                  <button onClick={()=>addToCart(selected)} className="px-4 py-2 rounded-xl bg-purple-600 text-white">Add to Cart</button>
-                  <button onClick={()=>{setSelected(null); setCheckoutOpen(true);}} className="px-4 py-2 rounded-xl border">Buy Now</button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Order success */}
-      {orderSuccess && (
-        <div className="fixed bottom-6 right-6 bg-emerald-600 text-white p-4 rounded-xl shadow">Order #{orderSuccess.id} placed — ${orderSuccess.total.toFixed(2)}</div>
-      )}
-
-      {/* NEWSLETTER */}
-      <section className="max-w-7xl mx-auto p-6 mt-10">
-        <div className="bg-white p-6 rounded-xl shadow flex flex-col md:flex-row items-center justify-between gap-4">
-          <div>
-            <h3 className="text-xl font-bold">Join our newsletter</h3>
-            <p className="text-gray-500">Get updates on new arrivals and exclusive offers.</p>
-          </div>
-          <div className="flex gap-3 w-full md:w-auto">
-            <input placeholder="Your email" className="border rounded-xl px-4 py-2 flex-1" />
-            <button className="px-4 py-2 bg-blue-600 text-white rounded-xl">Subscribe</button>
-          </div>
-        </div>
-      </section>
-
-      {/* FOOTER */}
-      <footer className="max-w-7xl mx-auto p-6 text-center text-gray-500 mt-10">
-        <p>Contact: support@animatedclothes.com</p>
-        © <span id="year"></span> Animated Clothes — All rights reserved.
-      </footer>
+<!-- HEADER -->
+<header class="max-w-7xl mx-auto p-4 flex flex-col md:flex-row justify-between items-center gap-4">
+  <div class="flex items-center gap-4">
+    <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-rose-400 to-indigo-500 flex items-center justify-center text-white font-bold">AC</div>
+    <div>
+      <h1 class="text-2xl font-extrabold">Animated Clothes</h1>
+      <p class="text-sm text-gray-500">Heritage-inspired modern wear</p>
     </div>
-  );
-}
+  </div>
 
-function CheckoutForm({ onCancel, onComplete, subtotal }){
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [address, setAddress] = useState("");
+  <div class="flex items-center gap-3">
+    <input id="searchInput" placeholder="Search products..." class="border rounded-xl px-3 py-2" />
 
-  return (
-    <form onSubmit={(e)=>{e.preventDefault(); onComplete({name,email,address});}} className="space-y-3">
+    <select id="categoryFilter" class="border rounded-xl px-3 py-2"></select>
+
+    <select id="sortFilter" class="border rounded-xl px-3 py-2">
+      <option value="popular">Popular</option>
+      <option value="price-asc">Price: Low to High</option>
+      <option value="price-desc">Price: High to Low</option>
+    </select>
+
+    <button onclick="openCheckout()" class="px-3 py-2 rounded-xl bg-amber-500 text-white font-semibold">Checkout (<span id="cartCount">0</span>)</button>
+  </div>
+</header>
+
+<!-- HERO SECTION -->
+<section class="relative h-80 w-full overflow-hidden rounded-xl max-w-7xl mx-auto mt-6">
+  <video src="video.mp4" autoplay loop muted class="w-full h-full object-cover"></video>
+  <div class="absolute inset-0 bg-black/40 flex items-center px-8">
+    <div>
+      <h2 class="text-white text-4xl font-bold">Where Heritage Meets Modern Fashion</h2>
+      <p class="text-gray-200 mt-2 max-w-xl">Cinematic cloth visuals, handcrafted styles, and a seamless shopping flow.</p>
+      <div class="mt-4 flex gap-3">
+        <button onclick="scrollToFeatured()" class="px-5 py-2 rounded-full bg-white text-black font-semibold">Shop Featured</button>
+        <button onclick="scrollToCategories()" class="px-5 py-2 rounded-full border border-white text-white">Browse Categories</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MAIN CONTENT -->
+<main class="max-w-7xl mx-auto p-6 grid grid-cols-1 lg:grid-cols-4 gap-6 mt-6">
+
+  <!-- PRODUCT GRID -->
+  <section class="lg:col-span-3">
+    <h2 id="featured" class="text-2xl font-bold mb-4">Products</h2>
+    <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6"></div>
+  </section>
+
+  <!-- CART -->
+  <aside class="bg-white p-4 rounded-xl shadow">
+    <h3 class="font-bold mb-3">Your Cart</h3>
+    <div id="cartItems" class="space-y-3 text-sm text-gray-500"></div>
+    <div class="mt-4 border-t pt-4">
+      <div class="flex justify-between"><div class="text-sm text-gray-500">Subtotal</div><div class="font-bold" id="subtotal">$0.00</div></div>
+      <button onclick="openCheckout()" class="mt-3 w-full px-4 py-2 rounded-xl bg-emerald-500 text-white font-semibold">Proceed to Checkout</button>
+    </div>
+  </aside>
+
+</main>
+
+<!-- CHECKOUT MODAL -->
+<div id="checkoutModal" class="fixed inset-0 bg-black/40 hidden items-center justify-center p-4">
+  <div class="bg-white rounded-xl p-6 w-full max-w-md">
+    <h3 class="text-xl font-bold mb-2">Checkout</h3>
+    <form onsubmit="submitCheckout(event)" class="space-y-3">
       <div>
-        <label className="text-sm">Full name</label>
-        <input required value={name} onChange={(e)=>setName(e.target.value)} className="w-full border rounded px-3 py-2" />
+        <label class="text-sm">Full Name</label>
+        <input id="nameInput" required class="w-full border rounded px-3 py-2" />
       </div>
       <div>
-        <label className="text-sm">Email</label>
-        <input required type="email" value={email} onChange={(e)=>setEmail(e.target.value)} className="w-full border rounded px-3 py-2" />
+        <label class="text-sm">Email</label>
+        <input id="emailInput" type="email" required class="w-full border rounded px-3 py-2" />
       </div>
       <div>
-        <label className="text-sm">Shipping address</label>
-        <input required value={address} onChange={(e)=>setAddress(e.target.value)} className="w-full border rounded px-3 py-2" />
+        <label class="text-sm">Address</label>
+        <input id="addressInput" required class="w-full border rounded px-3 py-2" />
       </div>
-      <div className="flex items-center justify-between">
-        <div className="text-sm text-gray-500">Total: <span className="font-bold">${subtotal.toFixed(2)}</span></div>
-        <div className="flex gap-2">
-          <button type="button" onClick={onCancel} className="px-4 py-2 rounded-xl border">Cancel</button>
-          <button type="submit" className="px-4 py-2 rounded-xl bg-emerald-500 text-white">Pay (Mock)</button>
-        </div>
+      <div class="flex justify-between items-center">
+        <div class="text-sm text-gray-500">Total: <span class="font-bold" id="checkoutTotal">$0.00</span></div>
+        <button type="submit" class="px-4 py-2 bg-emerald-500 text-white rounded-xl">Pay (Mock)</button>
       </div>
     </form>
-  );
+  </div>
+</div>
+
+<!-- NEWSLETTER -->
+<section class="max-w-7xl mx-auto p-6 mt-10">
+  <div class="bg-white p-6 rounded-xl shadow flex flex-col md:flex-row items-center justify-between gap-4">
+    <div>
+      <h3 class="text-xl font-bold">Join our newsletter</h3>
+      <p class="text-gray-500">Get updates on new arrivals and exclusive offers.</p>
+    </div>
+    <div class="flex gap-3 w-full md:w-auto">
+      <input placeholder="Your email" class="border rounded-xl px-4 py-2 flex-1" />
+      <button class="px-4 py-2 bg-blue-600 text-white rounded-xl">Subscribe</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="max-w-7xl mx-auto p-6 text-center text-gray-500 mt-10">
+  <p>Contact: support@animatedclothes.com</p>
+  <p>© <span id="year"></span> Animated Clothes — All rights reserved.</p>
+</footer>
+
+<!-- SCRIPT LOGIC -->
+<script>
+const products = [
+  { id: 1, name: "Saffron Breeze Abaya", price: 79, category: "Abayas", desc: "Lightweight & breathable.", img: "abaya.jpg" },
+  { id: 2, name: "Desert Sunrise Thobe", price: 99, category: "Thobes", desc: "Structured modern classic.", img: "thobe.jpg" },
+  { id: 3, name: "Noor Embroidered Cape", price: 129, category: "Kaftans", desc: "Hand embroidery.", img: "cape.jpg" },
+  { id: 4, name: "Royal Hijab", price: 29, category: "Hijabs", desc: "Soft premium fabric.", img: "hijab.jpg" },
+];
+
+let cart = [];
+
+function loadPage() {
+  document.getElementById("year").textContent = new Date().getFullYear();
+  loadCategories();
+  loadProducts();
 }
+
+function loadCategories() {
+  const categories = ["All", ...new Set(products.map(p => p.category))];
+  const select = document.getElementById("categoryFilter");
+  select.innerHTML = categories.map(c => `<option value="${c}">${c}</option>`).join("");
+}
+
+function loadProducts() {
+  const container = document.getElementById("productGrid");
+  container.innerHTML = products.map(p => `
+    <div class='bg-white p-4 rounded-xl shadow'>
+      <div class='h-44 bg-gray-100 rounded-xl mb-3 flex items-center justify-center'>Image</div>
+      <h3 class='font-semibold'>${p.name}</h3>
+      <p class='text-sm text-gray-500'>${p.desc}</p>
+      <div class='mt-3 flex items-center justify-between'>
+        <div class='font-bold text-lg'>$${p.price}</div>
+        <button onclick='addToCart(${p.id})' class='px-3 py-1 rounded-xl bg-purple-600 text-white'>Add</button>
+      </div>
+    </div>
+  `).join("");
+}
+
+function addToCart(id) {
+  const p = products.find(x => x.id === id);
+  const found = cart.find(x => x.id === id);
+  if (found) found.qty++;
+  else cart.push({ ...p, qty: 1 });
+  updateCartUI();
+}
+
+function updateCartUI() {
+  const c = document.getElementById("cartItems");
+  const subtotalEl = document.getElementBy
