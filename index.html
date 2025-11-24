@@ -1,218 +1,672 @@
-import React, { useEffect, useState } from "react";
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StyleHub - Clothing Store</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
 
-// Single-file React component (Tailwind-ready) — GitHub / Next.js friendly
-// - Drop this file into a React app (Next.js app/route or Vite) and ensure Tailwind is configured.
-// - Video path uses your uploaded local file. When deploying, place the video at /public/video.mp4
-//   Current uploaded path: /mnt/data/WhatsApp Video 2025-11-13 at 05.53.28_4c213f94.mp4
+        :root {
+            --primary: #2c3e50;
+            --secondary: #e74c3c;
+            --accent: #3498db;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+        }
 
-const HERO_VIDEO = "/mnt/data/WhatsApp Video 2025-11-13 at 05.53.28_4c213f94.mp4";
+        body {
+            background-color: #f9f9f9;
+            color: #333;
+            line-height: 1.6;
+        }
 
-const INITIAL_PRODUCTS = [
-  { id: 1, name: "Saffron Breeze Abaya", price: 79, category: "Abayas", desc: "Lightweight, breathable fabric with flowing silhouette." },
-  { id: 2, name: "Desert Sunrise Thobe", price: 99, category: "Thobes", desc: "Structured yet comfortable — modern classic." },
-  { id: 3, name: "Noor Embroidered Cape", price: 129, category: "Kaftans", desc: "Decorative embroidery with premium lining." },
-  { id: 4, name: "Royal Hijab", price: 29, category: "Hijabs", desc: "Soft premium fabric." },
-  { id: 5, name: "Sahara Sand Scarf", price: 19, category: "Accessories", desc: "Light scarf for all seasons." }
-];
+        /* Header Styles */
+        header {
+            background-color: var(--primary);
+            color: white;
+            padding: 1rem 5%;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
 
-export default function AnimatedClothesStore() {
-  const [products] = useState(INITIAL_PRODUCTS);
-  const [cart, setCart] = useState(() => {
-    try { return JSON.parse(localStorage.getItem("ac_cart") || "[]"); } catch { return []; }
-  });
-  const [query, setQuery] = useState("");
-  const [category, setCategory] = useState("All");
-  const [sort, setSort] = useState("popular");
-  const [selected, setSelected] = useState(null);
-  const [checkoutOpen, setCheckoutOpen] = useState(false);
-  const [orderSuccess, setOrderSuccess] = useState(null);
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-  useEffect(() => { localStorage.setItem("ac_cart", JSON.stringify(cart)); }, [cart]);
-  useEffect(() => { document.title = "Animated Clothes"; }, []);
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+        }
 
-  const categories = ["All", ...Array.from(new Set(products.map(p => p.category)))];
+        .logo span {
+            color: var(--secondary);
+        }
 
-  function addToCart(product) {
-    setCart(prev => {
-      const found = prev.find(p => p.id === product.id);
-      if (found) return prev.map(p => p.id === product.id ? { ...p, qty: p.qty + 1 } : p);
-      return [...prev, { ...product, qty: 1 }];
-    });
-  }
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
 
-  function removeFromCart(id) { setCart(prev => prev.filter(p => p.id !== id)); }
-  function updateQty(id, qty) { if (qty < 1) return removeFromCart(id); setCart(prev => prev.map(p => p.id === id ? { ...p, qty } : p)); }
+        nav ul li {
+            margin-left: 1.5rem;
+        }
 
-  const filtered = products.filter(p => (category === "All" || p.category === category) && (p.name.toLowerCase().includes(query.toLowerCase()) || p.desc.toLowerCase().includes(query.toLowerCase())) ).sort((a,b)=> {
-    if (sort === "price-asc") return a.price - b.price;
-    if (sort === "price-desc") return b.price - a.price;
-    return a.id - b.id;
-  });
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
 
-  const subtotal = cart.reduce((s,p)=> s + p.price * p.qty, 0);
+        nav ul li a:hover {
+            color: var(--secondary);
+        }
 
-  function handleCheckout({ name, email, address }) {
-    const order = { id: Math.floor(Math.random()*900000)+100000, items: cart, total: subtotal, name, email, address, createdAt: new Date().toISOString() };
-    setOrderSuccess(order);
-    setCart([]);
-    setCheckoutOpen(false);
-  }
+        .cart-icon {
+            position: relative;
+            cursor: pointer;
+        }
 
-  return (
-    <div className="min-h-screen bg-slate-50 text-slate-900">
-      <header className="max-w-7xl mx-auto p-4 flex flex-col md:flex-row justify-between items-center gap-4">
-        <div className="flex items-center gap-4">
-          <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-rose-400 to-indigo-500 flex items-center justify-center text-white font-bold">AC</div>
-          <div>
-            <h1 className="text-2xl font-extrabold">Animated Clothes</h1>
-            <p className="text-sm text-gray-500">Heritage-inspired modern wear</p>
-          </div>
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: var(--secondary);
+            color: white;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            font-size: 0.7rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1441986300917-64674bd600d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            height: 70vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            padding: 0 5%;
+        }
+
+        .hero-content h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            max-width: 700px;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--secondary);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+
+        .btn:hover {
+            background-color: #c0392b;
+            transform: translateY(-3px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Products Section */
+        .products {
+            padding: 5rem 5%;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .section-title p {
+            color: #777;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .product-card {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .product-img {
+            height: 200px;
+            background-color: #f5f5f5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .product-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .product-card:hover .product-img img {
+            transform: scale(1.1);
+        }
+
+        .product-info {
+            padding: 1.5rem;
+        }
+
+        .product-info h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-info p {
+            color: #777;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .product-price {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .price {
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--secondary);
+        }
+
+        .add-to-cart {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .add-to-cart:hover {
+            background-color: var(--secondary);
+        }
+
+        /* Categories Section */
+        .categories {
+            padding: 5rem 5%;
+            background-color: var(--light);
+        }
+
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .category-card {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            padding: 2rem 1rem;
+            transition: transform 0.3s;
+        }
+
+        .category-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .category-icon {
+            font-size: 2.5rem;
+            color: var(--secondary);
+            margin-bottom: 1rem;
+        }
+
+        .category-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* About Section */
+        .about {
+            padding: 5rem 5%;
+            display: flex;
+            align-items: center;
+            gap: 3rem;
+        }
+
+        .about-img {
+            flex: 1;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .about-img img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .about-content {
+            flex: 1;
+        }
+
+        .about-content h2 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+
+        .about-content p {
+            margin-bottom: 1.5rem;
+            color: #555;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 3rem 5% 1rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-column h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 2px;
+            background-color: var(--secondary);
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-column ul li a {
+            color: #bbb;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-column ul li a:hover {
+            color: var(--secondary);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            transition: all 0.3s;
+        }
+
+        .social-links a:hover {
+            background-color: var(--secondary);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #bbb;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            nav ul {
+                margin-top: 1rem;
+            }
+
+            .hero-content h1 {
+                font-size: 2.2rem;
+            }
+
+            .about {
+                flex-direction: column;
+            }
+
+            .about-img, .about-content {
+                flex: auto;
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 576px) {
+            nav ul li {
+                margin-left: 1rem;
+            }
+
+            .hero {
+                height: 60vh;
+            }
+
+            .hero-content h1 {
+                font-size: 1.8rem;
+            }
+
+            .section-title h2 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <a href="#" class="logo">Style<span>Hub</span></a>
+            <nav>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#products">Products</a></li>
+                    <li><a href="#categories">Categories</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                    <li class="cart-icon">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-count">3</span>
+                    </li>
+                </ul>
+            </nav>
         </div>
+    </header>
 
-        <div className="flex items-center gap-3 w-full md:w-auto">
-          <input value={query} onChange={(e)=>setQuery(e.target.value)} placeholder="Search products..." className="border rounded-xl px-3 py-2 flex-1 md:flex-none" />
-          <select value={category} onChange={(e)=>setCategory(e.target.value)} className="border rounded-xl px-3 py-2">
-            {categories.map((c,i)=>(<option key={i} value={c}>{c}</option>))}
-          </select>
-          <select value={sort} onChange={(e)=>setSort(e.target.value)} className="border rounded-xl px-3 py-2">
-            <option value="popular">Popular</option>
-            <option value="price-asc">Price: Low to High</option>
-            <option value="price-desc">Price: High to Low</option>
-          </select>
-
-          <button onClick={()=>setCheckoutOpen(true)} className="px-3 py-2 rounded-xl bg-amber-500 text-white font-semibold">Checkout ({cart.reduce((s,i)=> s + i.qty,0)})</button>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Elevate Your Style</h1>
+            <p>Discover the latest trends in fashion with our premium collection of clothing for every occasion.</p>
+            <a href="#products" class="btn">Shop Now</a>
         </div>
-      </header>
+    </section>
 
-      <section className="relative h-80 w-full overflow-hidden rounded-xl max-w-7xl mx-auto mt-6">
-        <video src={HERO_VIDEO} autoPlay loop muted className="w-full h-full object-cover brightness-75" />
-        <div className="absolute inset-0 bg-black/30 flex items-center px-8">
-          <div className="max-w-2xl bg-white/20 p-6 rounded-xl backdrop-blur-sm">
-            <h2 className="text-3xl font-bold text-white">Where Heritage Meets Modern Fashion</h2>
-            <p className="text-white/90 mt-2">Cinematic cloth visuals, handcrafted styles, and a seamless shopping flow — demo store.</p>
-          </div>
+    <!-- Products Section -->
+    <section class="products" id="products">
+        <div class="section-title">
+            <h2>Featured Products</h2>
+            <p>Check out our handpicked selection of trending items</p>
         </div>
-      </section>
-
-      <main className="max-w-7xl mx-auto p-6 grid grid-cols-1 lg:grid-cols-4 gap-6 mt-6">
-        <section className="lg:col-span-3">
-          <h2 className="text-2xl font-bold mb-4">Products</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-            {filtered.map(p => (
-              <div key={p.id} className="bg-white p-4 rounded-xl shadow group">
-                <div className="h-44 bg-gray-100 rounded-xl mb-3 flex items-center justify-center">Image</div>
-                <h3 className="font-semibold">{p.name}</h3>
-                <p className="text-sm text-gray-500">{p.desc}</p>
-                <div className="mt-3 flex items-center justify-between">
-                  <div className="font-bold text-lg">${p.price}</div>
-                  <div className="flex gap-2">
-                    <button onClick={()=>setSelected(p)} className="px-3 py-1 rounded-xl border">View</button>
-                    <button onClick={()=>addToCart(p)} className="px-3 py-1 rounded-xl bg-purple-600 text-white">Add</button>
-                  </div>
+        <div class="products-grid">
+            <!-- Product 1 -->
+            <div class="product-card">
+                <div class="product-img">
+                    <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Casual Shirt">
                 </div>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        <aside className="bg-white p-4 rounded-xl shadow">
-          <h3 className="font-bold mb-3">Your Cart</h3>
-          <div className="space-y-3">
-            {cart.length === 0 && <div className="text-sm text-gray-500">Cart is empty.</div>}
-            {cart.map(item => (
-              <div key={item.id} className="flex items-center justify-between">
-                <div>
-                  <div className="font-semibold">{item.name}</div>
-                  <div className="text-sm text-gray-500">${item.price} × {item.qty}</div>
+                <div class="product-info">
+                    <h3>Classic Casual Shirt</h3>
+                    <p>Perfect for everyday wear with premium cotton fabric.</p>
+                    <div class="product-price">
+                        <span class="price">$49.99</span>
+                        <button class="add-to-cart">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
                 </div>
-                <div className="flex items-center gap-2">
-                  <button onClick={()=>updateQty(item.id, item.qty-1)} className="px-2 py-1 border rounded">-</button>
-                  <div className="px-2">{item.qty}</div>
-                  <button onClick={()=>updateQty(item.id, item.qty+1)} className="px-2 py-1 border rounded">+</button>
-                  <button onClick={()=>removeFromCart(item.id)} className="px-2 py-1 text-red-600">✕</button>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div className="mt-4 border-t pt-4">
-            <div className="flex justify-between"><div className="text-sm text-gray-500">Subtotal</div><div className="font-bold">${subtotal.toFixed(2)}</div></div>
-            <button onClick={()=>setCheckoutOpen(true)} disabled={cart.length===0} className={`mt-3 w-full px-4 py-2 rounded-xl font-semibold ${cart.length===0? 'bg-gray-300 text-gray-600':'bg-emerald-500 text-white'}`}>
-              Proceed to Checkout
-            </button>
-          </div>
-        </aside>
-      </main>
-
-      {/* Checkout Modal */}
-      {checkoutOpen && (
-        <div className="fixed inset-0 bg-black/40 flex items-center justify-center p-4">
-          <div className="bg-white rounded-xl p-6 w-full max-w-md">
-            <h3 className="text-xl font-bold mb-2">Checkout</h3>
-            <CheckoutForm onCancel={()=>setCheckoutOpen(false)} onComplete={handleCheckout} subtotal={subtotal} />
-          </div>
-        </div>
-      )}
-
-      {/* Product Detail Modal */}
-      {selected && (
-        <div className="fixed inset-0 bg-black/40 flex items-center justify-center p-4">
-          <div className="bg-white rounded-xl p-6 w-full max-w-2xl">
-            <div className="flex justify-between items-start">
-              <h3 className="text-2xl font-bold">{selected.name}</h3>
-              <button onClick={()=>setSelected(null)} className="text-gray-500">✕</button>
             </div>
-            <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="h-64 bg-gray-100 rounded-xl flex items-center justify-center">Image</div>
-              <div>
-                <p className="text-gray-600">{selected.desc}</p>
-                <div className="mt-4 font-bold text-2xl">${selected.price}</div>
-                <div className="mt-4 flex gap-3">
-                  <button onClick={()=>{addToCart(selected); setSelected(null);}} className="px-4 py-2 rounded-xl bg-purple-600 text-white">Add to Cart</button>
-                  <button onClick={()=>{setSelected(null); setCheckoutOpen(true);}} className="px-4 py-2 rounded-xl border">Buy Now</button>
+            
+            <!-- Product 2 -->
+            <div class="product-card">
+                <div class="product-img">
+                    <img src="https://images.unsplash.com/photo-1591047139829-d91aecb6caea?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Denim Jacket">
                 </div>
-              </div>
+                <div class="product-info">
+                    <h3>Vintage Denim Jacket</h3>
+                    <p>Stylish and durable denim jacket for all seasons.</p>
+                    <div class="product-price">
+                        <span class="price">$79.99</span>
+                        <button class="add-to-cart">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
             </div>
-          </div>
+            
+            <!-- Product 3 -->
+            <div class="product-card">
+                <div class="product-img">
+                    <img src="https://images.unsplash.com/photo-1586790170083-2f9ceadc732d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Summer Dress">
+                </div>
+                <div class="product-info">
+                    <h3>Floral Summer Dress</h3>
+                    <p>Light and comfortable dress perfect for warm days.</p>
+                    <div class="product-price">
+                        <span class="price">$59.99</span>
+                        <button class="add-to-cart">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Product 4 -->
+            <div class="product-card">
+                <div class="product-img">
+                    <img src="https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Slim Fit Jeans">
+                </div>
+                <div class="product-info">
+                    <h3>Slim Fit Jeans</h3>
+                    <p>Comfortable and stylish jeans with perfect fit.</p>
+                    <div class="product-price">
+                        <span class="price">$64.99</span>
+                        <button class="add-to-cart">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
-      )}
+    </section>
 
-      {/* Order success toast */}
-      {orderSuccess && (
-        <div className="fixed bottom-6 right-6 bg-emerald-600 text-white p-4 rounded-xl shadow">Order #{orderSuccess.id} placed — ${orderSuccess.total.toFixed(2)}</div>
-      )}
-
-      <footer className="max-w-7xl mx-auto p-6 text-center text-gray-500 mt-12">Contact: support@animatedclothes.com — © {new Date().getFullYear()}</footer>
-    </div>
-  );
-}
-
-function CheckoutForm({ onCancel, onComplete, subtotal }){
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [address, setAddress] = useState("");
-
-  return (
-    <form onSubmit={(e)=>{ e.preventDefault(); onComplete({ name, email, address }); }} className="space-y-3">
-      <div>
-        <label className="text-sm">Full name</label>
-        <input required value={name} onChange={(e)=>setName(e.target.value)} className="w-full border rounded px-3 py-2" />
-      </div>
-      <div>
-        <label className="text-sm">Email</label>
-        <input required type="email" value={email} onChange={(e)=>setEmail(e.target.value)} className="w-full border rounded px-3 py-2" />
-      </div>
-      <div>
-        <label className="text-sm">Shipping address</label>
-        <input required value={address} onChange={(e)=>setAddress(e.target.value)} className="w-full border rounded px-3 py-2" />
-      </div>
-      <div className="flex items-center justify-between">
-        <div className="text-sm text-gray-500">Total: <span className="font-bold">${subtotal.toFixed(2)}</span></div>
-        <div className="flex gap-2">
-          <button type="button" onClick={onCancel} className="px-4 py-2 rounded-xl border">Cancel</button>
-          <button type="submit" className="px-4 py-2 rounded-xl bg-emerald-500 text-white">Pay (Mock)</button>
+    <!-- Categories Section -->
+    <section class="categories" id="categories">
+        <div class="section-title">
+            <h2>Shop By Category</h2>
+            <p>Find exactly what you're looking for in our organized collections</p>
         </div>
-      </div>
-    </form>
-  );
-}
+        <div class="categories-grid">
+            <div class="category-card">
+                <div class="category-icon">
+                    <i class="fas fa-tshirt"></i>
+                </div>
+                <h3>Tops</h3>
+                <p>Shirts, T-shirts, Blouses</p>
+            </div>
+            <div class="category-card">
+                <div class="category-icon">
+                    <i class="fas fa-vest"></i>
+                </div>
+                <h3>Bottoms</h3>
+                <p>Pants, Jeans, Skirts</p>
+            </div>
+            <div class="category-card">
+                <div class="category-icon">
+                    <i class="fas fa-vest-patches"></i>
+                </div>
+                <h3>Outerwear</h3>
+                <p>Jackets, Coats, Blazers</p>
+            </div>
+            <div class="category-card">
+                <div class="category-icon">
+                    <i class="fas fa-shoe-prints"></i>
+                </div>
+                <h3>Footwear</h3>
+                <p>Shoes, Sneakers, Boots</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="about-img">
+            <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="About Us">
+        </div>
+        <div class="about-content">
+            <h2>Our Story</h2>
+            <p>StyleHub was founded in 2015 with a simple mission: to provide high-quality, fashionable clothing at accessible prices. We believe that everyone deserves to look and feel their best without breaking the bank.</p>
+            <p>Our team of fashion experts carefully curates each collection, ensuring that we offer the latest trends while maintaining timeless style. We work directly with manufacturers to eliminate unnecessary markups and pass the savings on to you.</p>
+            <p>At StyleHub, we're committed to sustainable fashion practices and ethical manufacturing. We're proud to partner with factories that provide fair wages and safe working conditions for all employees.</p>
+            <a href="#" class="btn">Learn More</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>StyleHub</h3>
+                <p>Your one-stop destination for fashionable and affordable clothing.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-pinterest"></i></a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#products">Products</a></li>
+                    <li><a href="#categories">Categories</a></li>
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Customer Service</h3>
+                <ul>
+                    <li><a href="#">Shipping Policy</a></li>
+                    <li><a href="#">Returns & Refunds</a></li>
+                    <li><a href="#">Size Guide</a></li>
+                    <li><a href="#">FAQs</a></li>
+                    <li><a href="#">Track Your Order</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact Us</h3>
+                <ul>
+                    <li><i class="fas fa-map-marker-alt"></i> 123 Fashion Street, New York</li>
+                    <li><i class="fas fa-phone"></i> +1 (555) 123-4567</li>
+                    <li><i class="fas fa-envelope"></i> info@stylehub.com</li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 StyleHub. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Simple cart functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const addToCartButtons = document.querySelectorAll('.add-to-cart');
+            const cartCount = document.querySelector('.cart-count');
+            let count = 3; // Initial cart count
+            
+            addToCartButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    count++;
+                    cartCount.textContent = count;
+                    
+                    // Add animation to the button
+                    this.style.backgroundColor = '#2ecc71';
+                    setTimeout(() => {
+                        this.style.backgroundColor = '';
+                    }, 300);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
