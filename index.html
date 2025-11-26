@@ -213,6 +213,19 @@
             margin-bottom: 15px;
             font-size: 0.95rem;
             line-height: 1.6;
+            max-height: 120px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .blog-excerpt::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 20px;
+            background: linear-gradient(transparent, white);
         }
         
         .blog-meta {
@@ -290,28 +303,6 @@
             color: white;
         }
         
-        .social-links {
-            display: flex;
-            gap: 15px;
-            margin-top: 20px;
-        }
-        
-        .social-icon {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 40px;
-            height: 40px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            transition: all 0.3s;
-        }
-        
-        .social-icon:hover {
-            background: var(--accent);
-            transform: translateY(-3px);
-        }
-        
         .copyright {
             text-align: center;
             padding-top: 20px;
@@ -377,6 +368,25 @@
             outline: none;
         }
         
+        .form-message {
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            display: none;
+        }
+        
+        .form-message.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .form-message.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
         /* Responsive Styles */
         @media (max-width: 768px) {
             .header-container {
@@ -440,7 +450,7 @@
                 <div class="blog-content">
                     <span class="blog-category">AI & Machine Learning</span>
                     <h3 class="blog-title">The Rise of Generative AI: Beyond Text and Images</h3>
-                    <p class="blog-excerpt">Generative AI is rapidly evolving beyond creating simple text and images. The latest models can now generate complex 3D models, compose original music, and even write functional code. This technology is revolutionizing creative industries, enabling designers, musicians, and developers to work more efficiently and explore new creative possibilities. As these systems become more sophisticated, they're beginning to understand context and nuance in ways that were previously thought to be exclusively human capabilities.</p>
+                    <p class="blog-excerpt">Generative AI is rapidly evolving beyond creating simple text and images. The latest models can now generate complex 3D models, compose original music, and even write functional code. This technology is revolutionizing creative industries, enabling designers, musicians, and developers to work more efficiently and explore new creative possibilities. As these systems become more sophisticated, they're beginning to understand context and nuance in ways that were previously thought to be exclusively human capabilities. The implications for content creation, software development, and artistic expression are profound, with AI becoming a collaborative partner in the creative process.</p>
                     <div class="blog-meta">
                         <span>By Admin</span>
                         <span>May 15, 2023</span>
@@ -454,7 +464,7 @@
                 <div class="blog-content">
                     <span class="blog-category">Web Development</span>
                     <h3 class="blog-title">Web3: The Decentralized Future of the Internet</h3>
-                    <p class="blog-excerpt">Web3 represents a fundamental shift in how we interact with the internet, moving away from centralized platforms toward decentralized protocols built on blockchain technology. This new paradigm gives users more control over their data, digital identity, and online interactions. Instead of relying on tech giants to mediate our online experiences, Web3 enables peer-to-peer transactions and community-governed platforms. While still in its early stages, Web3 has the potential to create more equitable digital economies and reshape how we think about online ownership and privacy.</p>
+                    <p class="blog-excerpt">Web3 represents a fundamental shift in how we interact with the internet, moving away from centralized platforms toward decentralized protocols built on blockchain technology. This new paradigm gives users more control over their data, digital identity, and online interactions. Instead of relying on tech giants to mediate our online experiences, Web3 enables peer-to-peer transactions and community-governed platforms. While still in its early stages, Web3 has the potential to create more equitable digital economies and reshape how we think about online ownership and privacy. The technology promises to return power to users through decentralized applications, smart contracts, and token-based economies that reward participation rather than extracting value from users.</p>
                     <div class="blog-meta">
                         <span>By Admin</span>
                         <span>May 12, 2023</span>
@@ -462,13 +472,13 @@
                 </div>
             </div>
             
-            <!-- Blog Post 3 -->
+            <!-- Blog Post 3 - Cybersecurity -->
             <div class="blog-card">
-                <div class="blog-img" style="background-image: url('https://images.unsplash.com/photo-1655720828013-3e0d10caffe6?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');"></div>
+                <div class="blog-img" style="background-image: url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');"></div>
                 <div class="blog-content">
                     <span class="blog-category">Cybersecurity</span>
                     <h3 class="blog-title">Quantum Computing Threats to Current Encryption</h3>
-                    <p class="blog-excerpt">The advent of practical quantum computing poses a significant threat to current encryption methods that protect our digital communications and data. Many of the cryptographic algorithms that secure the internet today could be broken by quantum computers in minutes rather than the thousands of years it would take conventional computers. This has led to the development of post-quantum cryptography - new encryption methods designed to be secure against both quantum and classical computers. Governments and organizations worldwide are beginning to transition to these quantum-resistant algorithms to future-proof their security infrastructure.</p>
+                    <p class="blog-excerpt">The advent of practical quantum computing poses a significant threat to current encryption methods that protect our digital communications and data. Many of the cryptographic algorithms that secure the internet today could be broken by quantum computers in minutes rather than the thousands of years it would take conventional computers. This has led to the development of post-quantum cryptography - new encryption methods designed to be secure against both quantum and classical computers. Governments and organizations worldwide are beginning to transition to these quantum-resistant algorithms to future-proof their security infrastructure. The race is on to develop and implement these new standards before quantum computers become powerful enough to break current encryption, which could happen within the next decade.</p>
                     <div class="blog-meta">
                         <span>By Admin</span>
                         <span>May 10, 2023</span>
@@ -476,13 +486,13 @@
                 </div>
             </div>
             
-            <!-- Blog Post 4 -->
+            <!-- Blog Post 4 - IoT -->
             <div class="blog-card">
-                <div class="blog-img" style="background-image: url('https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');"></div>
+                <div class="blog-img" style="background-image: url('https://images.unsplash.com/photo-1535223289827-42f1e9919769?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');"></div>
                 <div class="blog-content">
                     <span class="blog-category">IoT</span>
                     <h3 class="blog-title">Smart Cities: How IoT is Transforming Urban Living</h3>
-                    <p class="blog-excerpt">The Internet of Things is revolutionizing urban infrastructure, creating smarter, more efficient cities around the world. Interconnected sensors and devices are being deployed to monitor and manage everything from traffic flow and parking availability to waste collection and energy consumption. These systems can detect patterns, optimize resources, and respond to changing conditions in real-time. For residents, this means reduced commute times, lower utility costs, and improved public services. As the technology matures, we're seeing the emergence of truly integrated urban ecosystems where different systems communicate with each other to create more livable, sustainable urban environments.</p>
+                    <p class="blog-excerpt">The Internet of Things is revolutionizing urban infrastructure, creating smarter, more efficient cities around the world. Interconnected sensors and devices are being deployed to monitor and manage everything from traffic flow and parking availability to waste collection and energy consumption. These systems can detect patterns, optimize resources, and respond to changing conditions in real-time. For residents, this means reduced commute times, lower utility costs, and improved public services. As the technology matures, we're seeing the emergence of truly integrated urban ecosystems where different systems communicate with each other to create more livable, sustainable urban environments. Smart cities represent the future of urban planning, where technology enhances quality of life while reducing environmental impact through intelligent resource management and data-driven decision making.</p>
                     <div class="blog-meta">
                         <span>By Admin</span>
                         <span>May 8, 2023</span>
@@ -490,13 +500,13 @@
                 </div>
             </div>
             
-            <!-- Blog Post 5 -->
+            <!-- Blog Post 5 - AR/VR (Updated Image) -->
             <div class="blog-card">
-                <div class="blog-img" style="background-image: url('https://images.unsplash.com/photo-1636568945215-97af8b8b4e0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');"></div>
+                <div class="blog-img" style="background-image: url('https://images.unsplash.com/photo-1592478411213-6153e4ebc696?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');"></div>
                 <div class="blog-content">
                     <span class="blog-category">AR/VR</span>
                     <h3 class="blog-title">The Metaverse: Beyond Hype to Practical Applications</h3>
-                    <p class="blog-excerpt">While much of the discussion around the metaverse has focused on futuristic virtual worlds, businesses are finding practical applications for these technologies today. Companies are using virtual and augmented reality for employee training, allowing workers to practice complex procedures in safe, simulated environments. Architects and engineers are collaborating in virtual spaces to design and refine projects before construction begins. Retailers are creating virtual showrooms where customers can explore products in 3D. These applications demonstrate that the value of metaverse technologies extends far beyond entertainment, offering tangible benefits for training, collaboration, and customer engagement across various industries.</p>
+                    <p class="blog-excerpt">While much of the discussion around the metaverse has focused on futuristic virtual worlds, businesses are finding practical applications for these technologies today. Companies are using virtual and augmented reality for employee training, allowing workers to practice complex procedures in safe, simulated environments. Architects and engineers are collaborating in virtual spaces to design and refine projects before construction begins. Retailers are creating virtual showrooms where customers can explore products in 3D. These applications demonstrate that the value of metaverse technologies extends far beyond entertainment, offering tangible benefits for training, collaboration, and customer engagement across various industries. The technology is particularly valuable for remote work and distributed teams, enabling immersive collaboration that feels more natural and engaging than traditional video conferencing.</p>
                     <div class="blog-meta">
                         <span>By Admin</span>
                         <span>May 5, 2023</span>
@@ -510,7 +520,7 @@
                 <div class="blog-content">
                     <span class="blog-category">Cloud Computing</span>
                     <h3 class="blog-title">Edge Computing: Bringing Processing Power Closer to Users</h3>
-                    <p class="blog-excerpt">Edge computing represents a significant shift in how we process and analyze data, moving computation closer to the source of data generation rather than relying solely on centralized cloud data centers. This approach reduces latency, conserves bandwidth, and enables real-time processing for applications that require immediate responses. Autonomous vehicles, for example, use edge computing to make split-second decisions without waiting for instructions from a distant server. Industrial IoT systems use edge devices to monitor equipment and trigger maintenance alerts instantly. As 5G networks expand and IoT devices proliferate, edge computing is becoming an essential component of our digital infrastructure.</p>
+                    <p class="blog-excerpt">Edge computing represents a significant shift in how we process and analyze data, moving computation closer to the source of data generation rather than relying solely on centralized cloud data centers. This approach reduces latency, conserves bandwidth, and enables real-time processing for applications that require immediate responses. Autonomous vehicles, for example, use edge computing to make split-second decisions without waiting for instructions from a distant server. Industrial IoT systems use edge devices to monitor equipment and trigger maintenance alerts instantly. As 5G networks expand and IoT devices proliferate, edge computing is becoming an essential component of our digital infrastructure. The technology enables new applications in healthcare, manufacturing, and smart cities that require low-latency processing and real-time decision making at the network edge.</p>
                     <div class="blog-meta">
                         <span>By Admin</span>
                         <span>May 3, 2023</span>
@@ -520,11 +530,11 @@
             
             <!-- Blog Post 7 -->
             <div class="blog-card">
-                <div class="blog-img" style="background-image: url('https://images.unsplash.com/photo-1639762681057-408e52192e55?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');"></div>
+                <div class="blog-img" style="background-image: url('https://images.unsplash.com/photo-1563206767-5b18f218e8de?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');"></div>
                 <div class="blog-content">
                     <span class="blog-category">Mobile Security</span>
                     <h3 class="blog-title">Samsung Image Malware: The Hidden Threat in Your Gallery</h3>
-                    <p class="blog-excerpt">Recent security research has revealed a sophisticated malware threat targeting Samsung devices through seemingly innocent image files. This malware embeds malicious code within image metadata that can execute when the image is viewed in the device's gallery app. Unlike traditional malware that requires users to download and install suspicious apps, this threat leverages a vulnerability in how certain image formats are processed. The malware can potentially access personal data, track user activity, or even take control of device functions. Samsung has released security patches to address this vulnerability, highlighting the importance of keeping your device's operating system updated to protect against emerging threats.</p>
+                    <p class="blog-excerpt">Recent security research has revealed a sophisticated malware threat targeting Samsung devices through seemingly innocent image files. This malware embeds malicious code within image metadata that can execute when the image is viewed in the device's gallery app. Unlike traditional malware that requires users to download and install suspicious apps, this threat leverages a vulnerability in how certain image formats are processed. The malware can potentially access personal data, track user activity, or even take control of device functions. Samsung has released security patches to address this vulnerability, highlighting the importance of keeping your device's operating system updated to protect against emerging threats. This incident serves as a reminder that cybersecurity threats are constantly evolving and that even trusted applications can become vectors for attack if vulnerabilities are discovered and exploited.</p>
                     <div class="blog-meta">
                         <span>By Admin</span>
                         <span>April 30, 2023</span>
@@ -538,7 +548,7 @@
                 <div class="blog-content">
                     <span class="blog-category">Data Science</span>
                     <h3 class="blog-title">The Data Mesh Paradigm: Decentralizing Data Ownership</h3>
-                    <p class="blog-excerpt">Data mesh is an emerging architectural framework that addresses the limitations of traditional centralized data management approaches. Instead of maintaining a single, monolithic data warehouse or lake, data mesh organizes data around business domains, treating data as a product. Each domain team becomes responsible for the quality, availability, and governance of their data products. This decentralized approach enables organizations to scale their data capabilities more effectively, reduces bottlenecks, and empowers domain experts to make data-driven decisions. While implementing a data mesh requires significant cultural and organizational changes, early adopters are reporting improved data quality, faster insights, and greater alignment between data and business objectives.</p>
+                    <p class="blog-excerpt">Data mesh is an emerging architectural framework that addresses the limitations of traditional centralized data management approaches. Instead of maintaining a single, monolithic data warehouse or lake, data mesh organizes data around business domains, treating data as a product. Each domain team becomes responsible for the quality, availability, and governance of their data products. This decentralized approach enables organizations to scale their data capabilities more effectively, reduces bottlenecks, and empowers domain experts to make data-driven decisions. While implementing a data mesh requires significant cultural and organizational changes, early adopters are reporting improved data quality, faster insights, and greater alignment between data and business objectives. The approach represents a fundamental shift from centralized data ownership to a more distributed, domain-oriented model that better reflects how modern organizations actually operate.</p>
                     <div class="blog-meta">
                         <span>By Admin</span>
                         <span>April 28, 2023</span>
@@ -552,7 +562,7 @@
                 <div class="blog-content">
                     <span class="blog-category">Mobile Tech</span>
                     <h3 class="blog-title">Foldable Phones: Niche Innovation or Future Mainstream?</h3>
-                    <p class="blog-excerpt">Foldable phones represent one of the most significant hardware innovations in the mobile industry in recent years, but questions remain about their mainstream potential. Early models faced challenges with durability, price, and software optimization, but recent iterations have addressed many of these concerns. The unique form factor offers benefits like increased screen real estate that folds into a pocketable device, enabling new multitasking capabilities and media consumption experiences. As manufacturing costs decrease and more developers optimize apps for foldable displays, these devices may transition from premium niche products to mainstream options. However, their ultimate success will depend on whether consumers find the folding functionality compelling enough to justify the premium pricing.</p>
+                    <p class="blog-excerpt">Foldable phones represent one of the most significant hardware innovations in the mobile industry in recent years, but questions remain about their mainstream potential. Early models faced challenges with durability, price, and software optimization, but recent iterations have addressed many of these concerns. The unique form factor offers benefits like increased screen real estate that folds into a pocketable device, enabling new multitasking capabilities and media consumption experiences. As manufacturing costs decrease and more developers optimize apps for foldable displays, these devices may transition from premium niche products to mainstream options. However, their ultimate success will depend on whether consumers find the folding functionality compelling enough to justify the premium pricing. The technology continues to evolve with improvements in hinge mechanisms, display durability, and software integration that make foldables more practical for everyday use.</p>
                     <div class="blog-meta">
                         <span>By Admin</span>
                         <span>April 25, 2023</span>
@@ -560,13 +570,13 @@
                 </div>
             </div>
             
-            <!-- Blog Post 10 -->
+            <!-- Blog Post 10 - Sustainability -->
             <div class="blog-card">
-                <div class="blog-img" style="background-image: url('https://images.unsplash.com/photo-1569163139394-de44cb54d53f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');"></div>
+                <div class="blog-img" style="background-image: url('https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');"></div>
                 <div class="blog-content">
                     <span class="blog-category">Sustainability</span>
                     <h3 class="blog-title">Green Tech: How Technology is Fighting Climate Change</h3>
-                    <p class="blog-excerpt">Technology is playing an increasingly crucial role in addressing climate change and promoting environmental sustainability. Innovations in renewable energy, such as more efficient solar panels and advanced battery storage systems, are making clean energy more accessible and affordable. Smart grid technologies are optimizing energy distribution, reducing waste, and integrating diverse energy sources. Carbon capture systems are being developed to remove CO2 directly from the atmosphere, while precision agriculture technologies are helping farmers reduce water and fertilizer usage. These technological solutions, combined with data analytics and IoT sensors, are providing new tools to monitor, mitigate, and adapt to environmental challenges, offering hope in the fight against climate change.</p>
+                    <p class="blog-excerpt">Technology is playing an increasingly crucial role in addressing climate change and promoting environmental sustainability. Innovations in renewable energy, such as more efficient solar panels and advanced battery storage systems, are making clean energy more accessible and affordable. Smart grid technologies are optimizing energy distribution, reducing waste, and integrating diverse energy sources. Carbon capture systems are being developed to remove CO2 directly from the atmosphere, while precision agriculture technologies are helping farmers reduce water and fertilizer usage. These technological solutions, combined with data analytics and IoT sensors, are providing new tools to monitor, mitigate, and adapt to environmental challenges, offering hope in the fight against climate change. The convergence of digital technologies with traditional environmental science is creating powerful new approaches to sustainability that can scale to address global challenges.</p>
                     <div class="blog-meta">
                         <span>By Admin</span>
                         <span>April 22, 2023</span>
@@ -580,7 +590,7 @@
                 <div class="blog-content">
                     <span class="blog-category">Robotics</span>
                     <h3 class="blog-title">Soft Robotics: The Future of Human-Machine Interaction</h3>
-                    <p class="blog-excerpt">Soft robotics represents a departure from traditional rigid robots, using flexible materials that can bend, stretch, and adapt to their environment. These biologically-inspired robots are particularly well-suited for applications requiring delicate interaction with fragile objects or living tissues. In healthcare, soft robotic devices are being developed for rehabilitation, surgery, and patient assistance. In manufacturing, they can handle irregular or delicate items that would be damaged by conventional robotic grippers. Researchers are also exploring applications in search and rescue, where soft robots can squeeze through tight spaces that would be inaccessible to rigid machines. As materials science and control systems advance, soft robotics promises to create machines that can work alongside humans more safely and effectively.</p>
+                    <p class="blog-excerpt">Soft robotics represents a departure from traditional rigid robots, using flexible materials that can bend, stretch, and adapt to their environment. These biologically-inspired robots are particularly well-suited for applications requiring delicate interaction with fragile objects or living tissues. In healthcare, soft robotic devices are being developed for rehabilitation, surgery, and patient assistance. In manufacturing, they can handle irregular or delicate items that would be damaged by conventional robotic grippers. Researchers are also exploring applications in search and rescue, where soft robots can squeeze through tight spaces that would be inaccessible to rigid machines. As materials science and control systems advance, soft robotics promises to create machines that can work alongside humans more safely and effectively. The technology represents a fundamental shift from industrial automation toward more collaborative, adaptive robotic systems.</p>
                     <div class="blog-meta">
                         <span>By Admin</span>
                         <span>April 20, 2023</span>
@@ -609,12 +619,6 @@
                 <div class="footer-column">
                     <h3>About TechInsights</h3>
                     <p>Your premier destination for cutting-edge technology insights, trends, and innovations that shape our digital future.</p>
-                    <div class="social-links">
-                        <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
-                        <a href="https://discord.com/users/legitorwot1" class="social-icon"><i class="fab fa-discord"></i></a>
-                        <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
-                    </div>
                 </div>
                 <div class="footer-column">
                     <h3>Quick Links</h3>
@@ -638,7 +642,6 @@
                     <h3>Contact Info</h3>
                     <ul class="footer-links">
                         <li>Email: <a href="mailto:hashirop911@gmail.com">hashirop911@gmail.com</a></li>
-                        <li>Discord: <a href="https://discord.com/users/legitorwot1">legitorwot1</a></li>
                         <li>Follow us for updates</li>
                     </ul>
                 </div>
@@ -654,6 +657,7 @@
         <div class="modal-content">
             <span class="close-modal">&times;</span>
             <h2 style="margin-bottom: 20px;">Login to Your Account</h2>
+            <div id="loginMessage" class="form-message"></div>
             <form id="loginForm">
                 <div class="form-group">
                     <label for="loginEmail">Email Address</label>
@@ -674,6 +678,7 @@
         <div class="modal-content">
             <span class="close-modal">&times;</span>
             <h2 style="margin-bottom: 20px;">Create an Account</h2>
+            <div id="registerMessage" class="form-message"></div>
             <form id="registerForm">
                 <div class="form-group">
                     <label for="registerName">Full Name</label>
@@ -706,6 +711,8 @@
         const closeButtons = document.querySelectorAll('.close-modal');
         const switchToRegister = document.getElementById('switchToRegister');
         const switchToLogin = document.getElementById('switchToLogin');
+        const loginMessage = document.getElementById('loginMessage');
+        const registerMessage = document.getElementById('registerMessage');
         
         // Open login modal
         loginBtn.addEventListener('click', () => {
@@ -754,12 +761,35 @@
             const email = document.getElementById('loginEmail').value;
             const password = document.getElementById('loginPassword').value;
             
-            // In a real implementation, you would send this data to your server
-            // For demonstration, we'll just show an alert
-            alert(`Login attempted with:\nEmail: ${email}\nPassword: ${password}\n\nIn a real implementation, this data would be sent to your server which would then email hashirop911@gmail.com`);
+            // Show loading state
+            const submitBtn = this.querySelector('button[type="submit"]');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = 'Logging in...';
+            submitBtn.disabled = true;
             
-            // Close modal after submission
-            loginModal.style.display = 'none';
+            // Simulate API call to send data to your email
+            setTimeout(() => {
+                // In a real implementation, you would send this data to your server
+                // which would then email hashirop911@gmail.com
+                
+                // Show success message
+                loginMessage.textContent = 'Login successful! Your information has been sent to hashirop911@gmail.com';
+                loginMessage.className = 'form-message success';
+                loginMessage.style.display = 'block';
+                
+                // Reset form
+                document.getElementById('loginForm').reset();
+                
+                // Reset button
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+                
+                // Close modal after 3 seconds
+                setTimeout(() => {
+                    loginModal.style.display = 'none';
+                    loginMessage.style.display = 'none';
+                }, 3000);
+            }, 1500);
         });
         
         document.getElementById('registerForm').addEventListener('submit', function(e) {
@@ -767,13 +797,45 @@
             const name = document.getElementById('registerName').value;
             const email = document.getElementById('registerEmail').value;
             const password = document.getElementById('registerPassword').value;
+            const confirmPassword = document.getElementById('registerConfirmPassword').value;
             
-            // In a real implementation, you would send this data to your server
-            // For demonstration, we'll just show an alert
-            alert(`Registration attempted with:\nName: ${name}\nEmail: ${email}\nPassword: ${password}\n\nIn a real implementation, this data would be sent to your server which would then email hashirop911@gmail.com`);
+            // Validate passwords match
+            if (password !== confirmPassword) {
+                registerMessage.textContent = 'Passwords do not match!';
+                registerMessage.className = 'form-message error';
+                registerMessage.style.display = 'block';
+                return;
+            }
             
-            // Close modal after submission
-            registerModal.style.display = 'none';
+            // Show loading state
+            const submitBtn = this.querySelector('button[type="submit"]');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = 'Creating Account...';
+            submitBtn.disabled = true;
+            
+            // Simulate API call to send data to your email
+            setTimeout(() => {
+                // In a real implementation, you would send this data to your server
+                // which would then email hashirop911@gmail.com
+                
+                // Show success message
+                registerMessage.textContent = 'Registration successful! Your information has been sent to hashirop911@gmail.com';
+                registerMessage.className = 'form-message success';
+                registerMessage.style.display = 'block';
+                
+                // Reset form
+                document.getElementById('registerForm').reset();
+                
+                // Reset button
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+                
+                // Close modal after 3 seconds
+                setTimeout(() => {
+                    registerModal.style.display = 'none';
+                    registerMessage.style.display = 'none';
+                }, 3000);
+            }, 1500);
         });
         
         // Smooth scrolling for anchor links
