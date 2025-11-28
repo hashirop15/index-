@@ -3,1469 +3,878 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VogueThreads | Premium Pakistani Fashion</title>
+    <title>TechInsights | Latest Technology Blog</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        /* Global Styles */
+        :root {
+            --primary: #4361ee;
+            --secondary: #3a0ca3;
+            --accent: #f72585;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gray: #6c757d;
+            --success: #4cc9f0;
+        }
+        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-
-        :root {
-            --primary: #8b5fbf;
-            --primary-dark: #6d3fa3;
-            --secondary: #ff6b6b;
-            --accent: #4ecdc4;
-            --light: #f7f9fc;
-            --dark: #2d3047;
-            --text: #333;
-            --text-light: #777;
-            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
+        
         body {
-            font-family: 'Montserrat', sans-serif;
-            background-color: #0a0a0a;
-            color: white;
+            background-color: #f5f7fb;
+            color: var(--dark);
             line-height: 1.6;
-            overflow-x: hidden;
-            cursor: none;
         }
-
-        h1, h2, h3, h4, h5 {
-            font-family: 'Playfair Display', serif;
+        
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background: var(--primary);
+            color: white;
+            border-radius: 30px;
             font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
         }
-
-        /* Particle Canvas */
-        #particle-canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
+        
+        .btn:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
-
-        /* Custom Cursor */
-        .cursor {
-            position: fixed;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.7);
-            pointer-events: none;
-            mix-blend-mode: difference;
-            z-index: 9999;
-            transition: transform 0.2s ease;
+        
+        .btn-accent {
+            background: var(--accent);
         }
-
-        .cursor-follower {
-            position: fixed;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            pointer-events: none;
-            z-index: 9998;
-            transition: transform 0.6s ease, opacity 0.6s ease;
+        
+        .btn-accent:hover {
+            background: #d9046d;
         }
-
+        
         /* Header Styles */
         header {
-            background: rgba(10, 10, 10, 0.8);
-            backdrop-filter: blur(10px);
-            padding: 1.5rem 5%;
-            position: fixed;
-            width: 100%;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
             top: 0;
             z-index: 1000;
-            transition: var(--transition);
         }
-
+        
         .header-container {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            padding: 15px 0;
         }
-
+        
         .logo {
-            font-size: 2.2rem;
-            font-weight: 700;
-            color: white;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--primary);
         }
-
+        
         .logo span {
-            color: var(--secondary);
+            color: var(--accent);
         }
-
+        
         nav ul {
             display: flex;
             list-style: none;
         }
-
+        
         nav ul li {
-            margin-left: 2rem;
-            position: relative;
+            margin-left: 25px;
         }
-
+        
         nav ul li a {
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: var(--primary);
+        }
+        
+        .auth-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: white;
-            text-decoration: none;
-            font-weight: 500;
-            padding: 0.5rem 0;
-            transition: var(--transition);
+            padding: 80px 0;
+            text-align: center;
+            margin-bottom: 50px;
+            border-radius: 0 0 20px 20px;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+        
+        /* Blog Posts Section */
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
             position: relative;
         }
-
-        nav ul li a::after {
+        
+        .section-title h2 {
+            font-size: 2.2rem;
+            color: var(--dark);
+            display: inline-block;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            display: block;
+            width: 70px;
+            height: 4px;
+            background: var(--accent);
+            margin: 10px auto;
+            border-radius: 2px;
+        }
+        
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+        
+        .blog-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .blog-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .blog-img {
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        
+        .blog-content {
+            padding: 20px;
+        }
+        
+        .blog-category {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-bottom: 10px;
+        }
+        
+        .blog-title {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+        
+        .blog-excerpt {
+            color: var(--gray);
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            max-height: 120px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .blog-excerpt::after {
             content: '';
             position: absolute;
             bottom: 0;
             left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--primary);
-            transition: var(--transition);
-        }
-
-        nav ul li a:hover {
-            color: var(--primary);
-        }
-
-        nav ul li a:hover::after {
             width: 100%;
-        }
-
-        .header-actions {
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
-        }
-
-        .cart-icon {
-            position: relative;
-            cursor: none;
-            transition: var(--transition);
-        }
-
-        .cart-icon:hover {
-            color: var(--primary);
-        }
-
-        .cart-count {
-            position: absolute;
-            top: -8px;
-            right: -8px;
-            background: var(--secondary);
-            color: white;
-            border-radius: 50%;
-            width: 20px;
             height: 20px;
-            font-size: 0.7rem;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            background: linear-gradient(transparent, white);
         }
-
-        /* Hero Section */
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 0 5%;
-            position: relative;
-        }
-
-        .hero-content {
-            max-width: 900px;
-            z-index: 1;
-        }
-
-        .hero-content h1 {
-            font-size: 5rem;
-            margin-bottom: 1.5rem;
-            line-height: 1.1;
-            text-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-        }
-
-        .hero-content p {
-            font-size: 1.3rem;
-            margin-bottom: 2.5rem;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-            color: #ccc;
-        }
-
-        .btn {
-            display: inline-block;
-            background: linear-gradient(45deg, var(--primary), var(--primary-dark));
-            color: white;
-            padding: 1.2rem 2.5rem;
-            border: none;
-            border-radius: 50px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: none;
-            transition: var(--transition);
-            text-decoration: none;
-            box-shadow: 0 5px 15px rgba(139, 95, 191, 0.4);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: 0.5s;
-        }
-
-        .btn:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(139, 95, 191, 0.6);
-        }
-
-        .btn:hover::before {
-            left: 100%;
-        }
-
-        /* Products Section */
-        .products {
-            padding: 8rem 5%;
-            background: rgba(10, 10, 10, 0.7);
-        }
-
-        .section-title {
-            text-align: center;
-            margin-bottom: 5rem;
-        }
-
-        .section-title h2 {
-            font-size: 3.5rem;
-            color: white;
-            margin-bottom: 1rem;
-            position: relative;
-            display: inline-block;
-        }
-
-        .section-title h2::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 4px;
-            background: var(--primary);
-            border-radius: 2px;
-        }
-
-        .section-title p {
-            color: #ccc;
-            max-width: 600px;
-            margin: 0 auto;
-            font-size: 1.1rem;
-        }
-
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 2.5rem;
-        }
-
-        .product-card {
-            background: rgba(30, 30, 30, 0.7);
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            transition: var(--transition);
-            position: relative;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .product-card:hover {
-            transform: translateY(-15px);
-            box-shadow: 0 15px 40px rgba(139, 95, 191, 0.3);
-        }
-
-        .product-badge {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: var(--secondary);
-            color: white;
-            padding: 0.3rem 0.8rem;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            z-index: 2;
-        }
-
-        .product-img {
-            height: 300px;
-            background-color: #1a1a1a;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .product-img img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: var(--transition);
-        }
-
-        .product-card:hover .product-img img {
-            transform: scale(1.1);
-        }
-
-        .product-info {
-            padding: 1.8rem;
-        }
-
-        .product-info h3 {
-            font-size: 1.4rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .product-info p {
-            color: #aaa;
-            margin-bottom: 1.2rem;
-            font-size: 0.95rem;
-        }
-
-        .product-price {
+        
+        .blog-meta {
             display: flex;
             justify-content: space-between;
-            align-items: center;
+            font-size: 0.85rem;
+            color: var(--gray);
+            border-top: 1px solid #e9ecef;
+            padding-top: 15px;
         }
-
-        .price {
-            font-weight: 700;
-            font-size: 1.4rem;
+        
+        /* Category Filter */
+        .category-filter {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+        
+        .category-btn {
+            padding: 10px 20px;
+            background: white;
+            border: 2px solid var(--primary);
+            border-radius: 30px;
             color: var(--primary);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
         }
-
-        .old-price {
-            text-decoration: line-through;
-            color: #777;
-            font-size: 0.9rem;
-            margin-right: 0.5rem;
-        }
-
-        .add-to-cart {
+        
+        .category-btn:hover, .category-btn.active {
             background: var(--primary);
             color: white;
-            border: none;
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: none;
-            transition: var(--transition);
-            box-shadow: 0 5px 15px rgba(139, 95, 191, 0.4);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
-
-        .add-to-cart:hover {
-            background: var(--primary-dark);
-            transform: rotate(90deg) scale(1.1);
-        }
-
-        /* Pakistan Best Sellers Section */
-        .pakistan-sellers {
-            padding: 8rem 5%;
-            background: rgba(15, 15, 15, 0.7);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .pakistan-sellers::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: url('https://images.unsplash.com/photo-1519996529937-47d6c0e48b2a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80');
-            background-size: cover;
-            background-position: center;
-            opacity: 0.1;
-            z-index: -1;
-        }
-
-        .sellers-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 3rem;
-        }
-
-        .sellers-header h2 {
-            font-size: 3.5rem;
-            color: white;
-            position: relative;
-            display: inline-block;
-        }
-
-        .sellers-header h2::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 0;
-            width: 80px;
-            height: 4px;
-            background: var(--primary);
-            border-radius: 2px;
-        }
-
-        .sale-badge {
-            background: var(--secondary);
-            color: white;
-            padding: 0.5rem 1.5rem;
-            border-radius: 50px;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
-
-        .sellers-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 2.5rem;
-        }
-
-        .seller-card {
-            background: rgba(30, 30, 30, 0.8);
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            transition: var(--transition);
-            position: relative;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .seller-card:hover {
-            transform: translateY(-15px);
-            box-shadow: 0 15px 40px rgba(139, 95, 191, 0.3);
-        }
-
-        .seller-badge {
-            position: absolute;
-            top: 15px;
-            left: 15px;
-            background: var(--secondary);
-            color: white;
-            padding: 0.3rem 0.8rem;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            z-index: 2;
-        }
-
-        .seller-img {
-            height: 300px;
-            background-color: #1a1a1a;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .seller-img img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: var(--transition);
-        }
-
-        .seller-card:hover .seller-img img {
-            transform: scale(1.1);
-        }
-
-        .seller-info {
-            padding: 1.8rem;
-        }
-
-        .seller-info h3 {
-            font-size: 1.4rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .seller-info p {
-            color: #aaa;
-            margin-bottom: 1.2rem;
-            font-size: 0.95rem;
-        }
-
-        .seller-stats {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
-
-        .sales-count {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: var(--accent);
-            font-weight: 600;
-        }
-
-        .rating {
-            display: flex;
-            align-items: center;
-            gap: 0.3rem;
-            color: #ffc107;
-        }
-
-        .seller-price {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        /* Categories Section */
-        .categories {
-            padding: 8rem 5%;
-            background: rgba(15, 15, 15, 0.7);
-        }
-
-        .categories-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-        }
-
-        .category-card {
-            background: rgba(30, 30, 30, 0.7);
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        
+        /* AdSense Section */
+        .ads-section {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
             text-align: center;
-            padding: 2.5rem 1.5rem;
-            transition: var(--transition);
-            position: relative;
-            z-index: 1;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin: 40px 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
         }
-
-        .category-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 0;
-            background: linear-gradient(45deg, var(--primary), var(--accent));
-            transition: var(--transition);
-            z-index: -1;
+        
+        .ads-placeholder {
+            background: #f8f9fa;
+            padding: 40px;
+            border: 2px dashed #dee2e6;
+            border-radius: 5px;
+            color: var(--gray);
         }
-
-        .category-card:hover::before {
-            height: 100%;
-        }
-
-        .category-card:hover {
-            transform: translateY(-10px);
-            color: white;
-        }
-
-        .category-card:hover .category-icon {
-            color: white;
-            transform: scale(1.2);
-        }
-
-        .category-card:hover h3,
-        .category-card:hover p {
-            color: white;
-        }
-
-        .category-icon {
-            font-size: 3.5rem;
-            color: var(--primary);
-            margin-bottom: 1.5rem;
-            transition: var(--transition);
-        }
-
-        .category-card h3 {
-            font-size: 1.6rem;
-            margin-bottom: 0.8rem;
-            transition: var(--transition);
-        }
-
-        .category-card p {
-            color: #aaa;
-            transition: var(--transition);
-        }
-
-        /* About Section */
-        .about {
-            padding: 8rem 5%;
-            display: flex;
-            align-items: center;
-            gap: 5rem;
-            background: rgba(10, 10, 10, 0.7);
-        }
-
-        .about-img {
-            flex: 1;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-            transform: rotate(-3deg);
-            transition: var(--transition);
-        }
-
-        .about-img:hover {
-            transform: rotate(0deg) scale(1.02);
-        }
-
-        .about-img img {
-            width: 100%;
-            height: auto;
-            display: block;
-            transition: var(--transition);
-        }
-
-        .about-img:hover img {
-            transform: scale(1.1);
-        }
-
-        .about-content {
-            flex: 1;
-        }
-
-        .about-content h2 {
-            font-size: 3.5rem;
-            color: white;
-            margin-bottom: 1.5rem;
-        }
-
-        .about-content p {
-            margin-bottom: 1.5rem;
-            color: #ccc;
-            font-size: 1.1rem;
-        }
-
-        .features {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1.5rem;
-            margin-top: 2rem;
-        }
-
-        .feature {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .feature-icon {
-            width: 50px;
-            height: 50px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--primary);
-            font-size: 1.2rem;
-            transition: var(--transition);
-        }
-
-        .feature:hover .feature-icon {
-            background: var(--primary);
-            color: white;
-            transform: rotate(360deg);
-        }
-
-        /* Newsletter */
-        .newsletter {
-            padding: 6rem 5%;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-            color: white;
-            text-align: center;
-            border-radius: 20px;
-            margin: 0 5% 8rem;
-            box-shadow: 0 20px 40px rgba(139, 95, 191, 0.3);
-        }
-
-        .newsletter h2 {
-            font-size: 2.8rem;
-            margin-bottom: 1rem;
-        }
-
-        .newsletter p {
-            max-width: 600px;
-            margin: 0 auto 2rem;
-            font-size: 1.1rem;
-        }
-
-        .newsletter-form {
-            display: flex;
-            max-width: 500px;
-            margin: 0 auto;
-        }
-
-        .newsletter-input {
-            flex: 1;
-            padding: 1rem 1.5rem;
-            border: none;
-            border-radius: 50px 0 0 50px;
-            font-size: 1rem;
-            outline: none;
-        }
-
-        .newsletter-btn {
-            background: var(--secondary);
-            color: white;
-            border: none;
-            padding: 0 2rem;
-            border-radius: 0 50px 50px 0;
-            font-weight: 600;
-            cursor: none;
-            transition: var(--transition);
-        }
-
-        .newsletter-btn:hover {
-            background: #ff5252;
-        }
-
+        
         /* Footer */
         footer {
-            background: rgba(5, 5, 5, 0.9);
+            background: var(--dark);
             color: white;
-            padding: 5rem 5% 2rem;
+            padding: 60px 0 20px;
         }
-
+        
         .footer-content {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 3rem;
-            margin-bottom: 3rem;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
         }
-
+        
         .footer-column h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+            margin-bottom: 20px;
             position: relative;
-            padding-bottom: 0.8rem;
+            padding-bottom: 10px;
         }
-
+        
         .footer-column h3::after {
             content: '';
             position: absolute;
             left: 0;
             bottom: 0;
-            width: 50px;
+            width: 40px;
             height: 3px;
-            background: var(--primary);
+            background: var(--accent);
         }
-
-        .footer-column ul {
+        
+        .footer-links {
             list-style: none;
         }
-
-        .footer-column ul li {
-            margin-bottom: 0.8rem;
+        
+        .footer-links li {
+            margin-bottom: 10px;
         }
-
-        .footer-column ul li a {
-            color: #bbb;
-            text-decoration: none;
-            transition: var(--transition);
+        
+        .footer-links a {
+            color: #adb5bd;
+            transition: color 0.3s;
         }
-
-        .footer-column ul li a:hover {
-            color: var(--primary);
-            padding-left: 5px;
-        }
-
-        .social-links {
-            display: flex;
-            gap: 1rem;
-            margin-top: 1.5rem;
-        }
-
-        .social-links a {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 40px;
-            height: 40px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
+        
+        .footer-links a:hover {
             color: white;
-            transition: var(--transition);
         }
-
-        .social-links a:hover {
-            background: var(--primary);
-            transform: translateY(-5px);
-        }
-
+        
         .copyright {
             text-align: center;
-            padding-top: 2rem;
+            padding-top: 20px;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
-            color: #bbb;
+            color: #adb5bd;
             font-size: 0.9rem;
         }
-
-        /* Responsive Design */
-        @media (max-width: 992px) {
-            .about {
-                flex-direction: column;
-                gap: 3rem;
-            }
-            
-            .hero-content h1 {
-                font-size: 3.5rem;
-            }
-            
-            .sellers-header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 1.5rem;
-            }
+        
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
         }
-
+        
+        .modal-content {
+            background: white;
+            width: 90%;
+            max-width: 500px;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--gray);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border 0.3s;
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary);
+            outline: none;
+        }
+        
+        .form-message {
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            display: none;
+        }
+        
+        .form-message.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .form-message.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        /* Responsive Styles */
         @media (max-width: 768px) {
-            nav ul {
-                display: none;
-            }
-            
-            .hero-content h1 {
-                font-size: 2.8rem;
-            }
-            
-            .section-title h2 {
-                font-size: 2.8rem;
-            }
-            
-            .sellers-header h2 {
-                font-size: 2.8rem;
-            }
-            
-            .newsletter-form {
+            .header-container {
                 flex-direction: column;
-                gap: 1rem;
+                text-align: center;
             }
             
-            .newsletter-input, .newsletter-btn {
-                border-radius: 50px;
-                width: 100%;
+            nav ul {
+                margin: 20px 0;
             }
             
-            .cursor, .cursor-follower {
-                display: none;
-            }
-            
-            body {
-                cursor: auto;
-            }
-        }
-
-        @media (max-width: 576px) {
-            .hero-content h1 {
+            .hero h1 {
                 font-size: 2.2rem;
             }
             
-            .section-title h2 {
-                font-size: 2.2rem;
-            }
-            
-            .sellers-header h2 {
-                font-size: 2.2rem;
-            }
-            
-            .features {
+            .blog-grid {
                 grid-template-columns: 1fr;
             }
             
-            .footer-content {
-                grid-template-columns: 1fr;
+            .category-filter {
+                gap: 10px;
+            }
+            
+            .category-btn {
+                padding: 8px 16px;
+                font-size: 0.9rem;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Particle Canvas -->
-    <canvas id="particle-canvas"></canvas>
-
-    <!-- Custom Cursor -->
-    <div class="cursor"></div>
-    <div class="cursor-follower"></div>
-
     <!-- Header -->
     <header>
-        <div class="header-container">
-            <a href="#" class="logo">
-                <i class="fas fa-crown"></i>
-                Vogue<span>Threads</span>
-            </a>
-            
+        <div class="container header-container">
+            <div class="logo">Tech<span>Insights</span></div>
             <nav>
                 <ul>
-                    <li><a href="#">Home</a></li>
-                    <li><a href="#products">New Arrivals</a></li>
-                    <li><a href="#pakistan-sellers">Pakistan Best Sellers</a></li>
-                    <li><a href="#categories">Categories</a></li>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#blogs">Blogs</a></li>
                     <li><a href="#about">About</a></li>
                     <li><a href="#contact">Contact</a></li>
                 </ul>
             </nav>
-            
-            <div class="header-actions">
-                <div class="cart-icon">
-                    <i class="fas fa-shopping-bag"></i>
-                    <span class="cart-count">3</span>
-                </div>
+            <div class="auth-buttons">
+                <button class="btn" id="loginBtn">Login</button>
+                <button class="btn btn-accent" id="registerBtn">Register</button>
             </div>
         </div>
     </header>
 
     <!-- Hero Section -->
-    <section class="hero">
-        <div class="hero-content">
-            <h1>Elevate Your Style with VogueThreads</h1>
-            <p>Discover our exclusive collection of premium Pakistani clothing that combines comfort, quality, and sophisticated design.</p>
-            <a href="#products" class="btn">Shop Now</a>
+    <section class="hero" id="home">
+        <div class="container">
+            <h1>Discover the Future of Technology</h1>
+            <p>Explore cutting-edge innovations, AI breakthroughs, and tech trends that are shaping our world. Stay ahead with our expert insights.</p>
+            <button class="btn btn-accent">Explore Blogs</button>
         </div>
     </section>
 
-    <!-- Products Section -->
-    <section class="products" id="products">
+    <!-- Blog Posts Section -->
+    <section class="container" id="blogs">
         <div class="section-title">
-            <h2>New Arrivals</h2>
-            <p>Discover our latest collection of premium Pakistani clothing</p>
+            <h2>Latest Blog Posts</h2>
         </div>
-        <div class="products-grid">
-            <!-- Product 1 -->
-            <div class="product-card">
-                <div class="product-badge">Bestseller</div>
-                <div class="product-img">
-                    <img src="https://images.unsplash.com/photo-1617137968427-85924c800a22?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Kurta Shalwar">
-                </div>
-                <div class="product-info">
-                    <h3>Embroidered Kurta Shalwar</h3>
-                    <p>Traditional Pakistani outfit with intricate embroidery. Perfect for weddings and special occasions.</p>
-                    <div class="product-price">
-                        <div>
-                            <span class="old-price">Rs. 5,999</span>
-                            <span class="price">Rs. 4,299</span>
-                        </div>
-                        <button class="add-to-cart">
-                            <i class="fas fa-plus"></i>
-                        </button>
+        
+        <!-- Category Filter -->
+        <div class="category-filter">
+            <button class="category-btn active" data-category="all">All Posts</button>
+            <button class="category-btn" data-category="ai">AI & Machine Learning</button>
+            <button class="category-btn" data-category="web">Web Development</button>
+            <button class="category-btn" data-category="cyber">Cybersecurity</button>
+            <button class="category-btn" data-category="iot">IoT</button>
+            <button class="category-btn" data-category="ar">AR/VR</button>
+            <button class="category-btn" data-category="cloud">Cloud Computing</button>
+            <button class="category-btn" data-category="mobile">Mobile Tech</button>
+            <button class="category-btn" data-category="data">Data Science</button>
+            <button class="category-btn" data-category="sustainability">Sustainability</button>
+            <button class="category-btn" data-category="robotics">Robotics</button>
+        </div>
+        
+        <div class="blog-grid" id="blogContainer">
+            <!-- Blog Post 1 - AI & Machine Learning -->
+            <div class="blog-card" data-category="ai">
+                <div class="blog-img" style="background-image: url('https://images.unsplash.com/photo-1677442136019-21780ecad995?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');"></div>
+                <div class="blog-content">
+                    <span class="blog-category">AI & Machine Learning</span>
+                    <h3 class="blog-title">The Rise of Generative AI: Beyond Text and Images</h3>
+                    <p class="blog-excerpt">Generative AI is rapidly evolving beyond creating simple text and images. The latest models can now generate complex 3D models, compose original music, and even write functional code. This technology is revolutionizing creative industries, enabling designers, musicians, and developers to work more efficiently and explore new creative possibilities.</p>
+                    <div class="blog-meta">
+                        <span>By Admin</span>
+                        <span>May 15, 2023</span>
                     </div>
                 </div>
             </div>
             
-            <!-- Product 2 -->
-            <div class="product-card">
-                <div class="product-badge">Trending</div>
-                <div class="product-img">
-                    <img src="https://images.unsplash.com/photo-1596755094514-f87e34085b2c?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Pathani Suit">
-                </div>
-                <div class="product-info">
-                    <h3>Pathani Suit Collection</h3>
-                    <p>Elegant and comfortable Pathani suits with modern cuts. Available in various colors and fabrics.</p>
-                    <div class="product-price">
-                        <div>
-                            <span class="old-price">Rs. 6,499</span>
-                            <span class="price">Rs. 4,999</span>
-                        </div>
-                        <button class="add-to-cart">
-                            <i class="fas fa-plus"></i>
-                        </button>
+            <!-- Blog Post 2 - Web Development -->
+            <div class="blog-card" data-category="web">
+                <div class="blog-img" style="background-image: url('https://images.unsplash.com/photo-1627398242454-45a1465c2479?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');"></div>
+                <div class="blog-content">
+                    <span class="blog-category">Web Development</span>
+                    <h3 class="blog-title">Web3: The Decentralized Future of the Internet</h3>
+                    <p class="blog-excerpt">Web3 represents a fundamental shift in how we interact with the internet, moving away from centralized platforms toward decentralized protocols built on blockchain technology. This new paradigm gives users more control over their data, digital identity, and online interactions.</p>
+                    <div class="blog-meta">
+                        <span>By Admin</span>
+                        <span>May 12, 2023</span>
                     </div>
                 </div>
             </div>
             
-            <!-- Product 3 -->
-            <div class="product-card">
-                <div class="product-badge">Popular</div>
-                <div class="product-img">
-                    <img src="https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Casual Shirt">
-                </div>
-                <div class="product-info">
-                    <h3>Pakistani Casual Shirt</h3>
-                    <p>Stylish and comfortable casual shirts with unique Pakistani prints and patterns.</p>
-                    <div class="product-price">
-                        <div>
-                            <span class="old-price">Rs. 3,499</span>
-                            <span class="price">Rs. 2,499</span>
-                        </div>
-                        <button class="add-to-cart">
-                            <i class="fas fa-plus"></i>
-                        </button>
+            <!-- Blog Post 3 - Cybersecurity -->
+            <div class="blog-card" data-category="cyber">
+                <div class="blog-img" style="background-image: url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');"></div>
+                <div class="blog-content">
+                    <span class="blog-category">Cybersecurity</span>
+                    <h3 class="blog-title">Quantum Computing Threats to Current Encryption</h3>
+                    <p class="blog-excerpt">The advent of practical quantum computing poses a significant threat to current encryption methods that protect our digital communications and data. Many of the cryptographic algorithms that secure the internet today could be broken by quantum computers in minutes rather than the thousands of years it would take conventional computers.</p>
+                    <div class="blog-meta">
+                        <span>By Admin</span>
+                        <span>May 10, 2023</span>
                     </div>
                 </div>
             </div>
             
-            <!-- Product 4 -->
-            <div class="product-card">
-                <div class="product-badge">Limited</div>
-                <div class="product-img">
-                    <img src="https://images.unsplash.com/photo-1617137968427-85924c800a22?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Designer Kurta">
+            <!-- Blog Post 4 - IoT -->
+            <div class="blog-card" data-category="iot">
+                <div class="blog-img" style="background-image: url('https://images.unsplash.com/photo-1535223289827-42f1e9919769?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');"></div>
+                <div class="blog-content">
+                    <span class="blog-category">IoT</span>
+                    <h3 class="blog-title">Smart Cities: How IoT is Transforming Urban Living</h3>
+                    <p class="blog-excerpt">The Internet of Things is revolutionizing urban infrastructure, creating smarter, more efficient cities around the world. Interconnected sensors and devices are being deployed to monitor and manage everything from traffic flow and parking availability to waste collection and energy consumption.</p>
+                    <div class="blog-meta">
+                        <span>By Admin</span>
+                        <span>May 8, 2023</span>
+                    </div>
                 </div>
-                <div class="product-info">
-                    <h3>Designer Embroidered Kurta</h3>
-                    <p>Premium quality designer kurta with handcrafted embroidery. Limited edition collection.</p>
-                    <div class="product-price">
-                        <div>
-                            <span class="old-price">Rs. 8,999</span>
-                            <span class="price">Rs. 6,499</span>
-                        </div>
-                        <button class="add-to-cart">
-                            <i class="fas fa-plus"></i>
-                        </button>
+            </div>
+            
+            <!-- Blog Post 5 - AR/VR -->
+            <div class="blog-card" data-category="ar">
+                <div class="blog-img" style="background-image: url('https://images.unsplash.com/photo-1592478411213-6153e4ebc696?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');"></div>
+                <div class="blog-content">
+                    <span class="blog-category">AR/VR</span>
+                    <h3 class="blog-title">The Metaverse: Beyond Hype to Practical Applications</h3>
+                    <p class="blog-excerpt">While much of the discussion around the metaverse has focused on futuristic virtual worlds, businesses are finding practical applications for these technologies today. Companies are using virtual and augmented reality for employee training, allowing workers to practice complex procedures in safe, simulated environments.</p>
+                    <div class="blog-meta">
+                        <span>By Admin</span>
+                        <span>May 5, 2023</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Blog Post 6 - Cloud Computing -->
+            <div class="blog-card" data-category="cloud">
+                <div class="blog-img" style="background-image: url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');"></div>
+                <div class="blog-content">
+                    <span class="blog-category">Cloud Computing</span>
+                    <h3 class="blog-title">Edge Computing: Bringing Processing Power Closer to Users</h3>
+                    <p class="blog-excerpt">Edge computing represents a significant shift in how we process and analyze data, moving computation closer to the source of data generation rather than relying solely on centralized cloud data centers. This approach reduces latency, conserves bandwidth, and enables real-time processing for applications that require immediate responses.</p>
+                    <div class="blog-meta">
+                        <span>By Admin</span>
+                        <span>May 3, 2023</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Blog Post 7 - Cybersecurity -->
+            <div class="blog-card" data-category="cyber">
+                <div class="blog-img" style="background-image: url('https://images.unsplash.com/photo-1563206767-5b18f218e8de?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');"></div>
+                <div class="blog-content">
+                    <span class="blog-category">Mobile Security</span>
+                    <h3 class="blog-title">Samsung Image Malware: The Hidden Threat in Your Gallery</h3>
+                    <p class="blog-excerpt">Recent security research has revealed a sophisticated malware threat targeting Samsung devices through seemingly innocent image files. This malware embeds malicious code within image metadata that can execute when the image is viewed in the device's gallery app.</p>
+                    <div class="blog-meta">
+                        <span>By Admin</span>
+                        <span>April 30, 2023</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Blog Post 8 - Data Science -->
+            <div class="blog-card" data-category="data">
+                <div class="blog-img" style="background-image: url('https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');"></div>
+                <div class="blog-content">
+                    <span class="blog-category">Data Science</span>
+                    <h3 class="blog-title">The Data Mesh Paradigm: Decentralizing Data Ownership</h3>
+                    <p class="blog-excerpt">Data mesh is an emerging architectural framework that addresses the limitations of traditional centralized data management approaches. Instead of maintaining a single, monolithic data warehouse or lake, data mesh organizes data around business domains, treating data as a product.</p>
+                    <div class="blog-meta">
+                        <span>By Admin</span>
+                        <span>April 28, 2023</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Blog Post 9 - Mobile Tech -->
+            <div class="blog-card" data-category="mobile">
+                <div class="blog-img" style="background-image: url('https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');"></div>
+                <div class="blog-content">
+                    <span class="blog-category">Mobile Tech</span>
+                    <h3 class="blog-title">Foldable Phones: Niche Innovation or Future Mainstream?</h3>
+                    <p class="blog-excerpt">Foldable phones represent one of the most significant hardware innovations in the mobile industry in recent years, but questions remain about their mainstream potential. Early models faced challenges with durability, price, and software optimization, but recent iterations have addressed many of these concerns.</p>
+                    <div class="blog-meta">
+                        <span>By Admin</span>
+                        <span>April 25, 2023</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Blog Post 10 - Sustainability -->
+            <div class="blog-card" data-category="sustainability">
+                <div class="blog-img" style="background-image: url('https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');"></div>
+                <div class="blog-content">
+                    <span class="blog-category">Sustainability</span>
+                    <h3 class="blog-title">Green Tech: How Technology is Fighting Climate Change</h3>
+                    <p class="blog-excerpt">Technology is playing an increasingly crucial role in addressing climate change and promoting environmental sustainability. Innovations in renewable energy, such as more efficient solar panels and advanced battery storage systems, are making clean energy more accessible and affordable.</p>
+                    <div class="blog-meta">
+                        <span>By Admin</span>
+                        <span>April 22, 2023</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Blog Post 11 - Robotics -->
+            <div class="blog-card" data-category="robotics">
+                <div class="blog-img" style="background-image: url('https://images.unsplash.com/photo-1485827404703-89b55fcc595e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');"></div>
+                <div class="blog-content">
+                    <span class="blog-category">Robotics</span>
+                    <h3 class="blog-title">Soft Robotics: The Future of Human-Machine Interaction</h3>
+                    <p class="blog-excerpt">Soft robotics represents a departure from traditional rigid robots, using flexible materials that can bend, stretch, and adapt to their environment. These biologically-inspired robots are particularly well-suited for applications requiring delicate interaction with fragile objects or living tissues.</p>
+                    <div class="blog-meta">
+                        <span>By Admin</span>
+                        <span>April 20, 2023</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Additional AI Blog -->
+            <div class="blog-card" data-category="ai">
+                <div class="blog-img" style="background-image: url('https://images.unsplash.com/photo-1677442135337-6d63fc7aa3a5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');"></div>
+                <div class="blog-content">
+                    <span class="blog-category">AI & Machine Learning</span>
+                    <h3 class="blog-title">AI in Healthcare: Revolutionizing Medical Diagnosis</h3>
+                    <p class="blog-excerpt">Artificial intelligence is transforming healthcare by enabling faster and more accurate medical diagnoses. Machine learning algorithms can analyze medical images, predict disease outbreaks, and assist doctors in creating personalized treatment plans for patients.</p>
+                    <div class="blog-meta">
+                        <span>By Admin</span>
+                        <span>April 18, 2023</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Additional Web Development Blog -->
+            <div class="blog-card" data-category="web">
+                <div class="blog-img" style="background-image: url('https://images.unsplash.com/photo-1639762681485-074b7f938ba0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');"></div>
+                <div class="blog-content">
+                    <span class="blog-category">Web Development</span>
+                    <h3 class="blog-title">Progressive Web Apps: The Future of Mobile Web</h3>
+                    <p class="blog-excerpt">Progressive Web Apps (PWAs) combine the best of web and mobile apps, offering fast loading, offline functionality, and app-like experiences. They're becoming increasingly popular as businesses look for cost-effective ways to reach users across multiple platforms.</p>
+                    <div class="blog-meta">
+                        <span>By Admin</span>
+                        <span>April 15, 2023</span>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Pakistan Best Sellers Section -->
-    <section class="pakistan-sellers" id="pakistan-sellers">
-        <div class="sellers-header">
-            <h2>Pakistan Best Sellers</h2>
-            <div class="sale-badge">
-                <i class="fas fa-fire"></i>
-                <span>1,000+ Sold This Month</span>
+    <!-- AdSense Section -->
+    <section class="container">
+        <div class="ads-section">
+            <h3>Advertisement</h3>
+            <div class="ads-placeholder">
+                <!-- Replace this with your actual AdSense code -->
+                <p>AdSense Advertisement Will Appear Here</p>
+                <p><small>After approval, replace this placeholder with your AdSense code</small></p>
             </div>
         </div>
-        <div class="sellers-grid">
-            <!-- Seller 1 -->
-            <div class="seller-card">
-                <div class="seller-badge">Bestseller</div>
-                <div class="seller-img">
-                    <img src="https://images.unsplash.com/photo-1617137968427-85924c800a22?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Kurta Shalwar">
-                </div>
-                <div class="seller-info">
-                    <h3>Embroidered Kurta Shalwar</h3>
-                    <p>Traditional Pakistani outfit with intricate embroidery. Perfect for weddings and special occasions.</p>
-                    <div class="seller-stats">
-                        <div class="sales-count">
-                            <i class="fas fa-shopping-cart"></i>
-                            <span>850+ sold</span>
-                        </div>
-                        <div class="rating">
-                            <i class="fas fa-star"></i>
-                            <span>4.8</span>
-                        </div>
-                    </div>
-                    <div class="seller-price">
-                        <div>
-                            <span class="old-price">Rs. 5,999</span>
-                            <span class="price">Rs. 4,299</span>
-                        </div>
-                        <button class="add-to-cart">
-                            <i class="fas fa-plus"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Seller 2 -->
-            <div class="seller-card">
-                <div class="seller-badge">Trending</div>
-                <div class="seller-img">
-                    <img src="https://images.unsplash.com/photo-1596755094514-f87e34085b2c?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Pathani Suit">
-                </div>
-                <div class="seller-info">
-                    <h3>Pathani Suit Collection</h3>
-                    <p>Elegant and comfortable Pathani suits with modern cuts. Available in various colors and fabrics.</p>
-                    <div class="seller-stats">
-                        <div class="sales-count">
-                            <i class="fas fa-shopping-cart"></i>
-                            <span>720+ sold</span>
-                        </div>
-                        <div class="rating">
-                            <i class="fas fa-star"></i>
-                            <span>4.7</span>
-                        </div>
-                    </div>
-                    <div class="seller-price">
-                        <div>
-                            <span class="old-price">Rs. 6,499</span>
-                            <span class="price">Rs. 4,999</span>
-                        </div>
-                        <button class="add-to-cart">
-                            <i class="fas fa-plus"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Seller 3 -->
-            <div class="seller-card">
-                <div class="seller-badge">Popular</div>
-                <div class="seller-img">
-                    <img src="https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Casual Shirt">
-                </div>
-                <div class="seller-info">
-                    <h3>Pakistani Casual Shirt</h3>
-                    <p>Stylish and comfortable casual shirts with unique Pakistani prints and patterns.</p>
-                    <div class="seller-stats">
-                        <div class="sales-count">
-                            <i class="fas fa-shopping-cart"></i>
-                            <span>1,200+ sold</span>
-                        </div>
-                        <div class="rating">
-                            <i class="fas fa-star"></i>
-                            <span>4.9</span>
-                        </div>
-                    </div>
-                    <div class="seller-price">
-                        <div>
-                            <span class="old-price">Rs. 3,499</span>
-                            <span class="price">Rs. 2,499</span>
-                        </div>
-                        <button class="add-to-cart">
-                            <i class="fas fa-plus"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Seller 4 -->
-            <div class="seller-card">
-                <div class="seller-badge">Limited</div>
-                <div class="seller-img">
-                    <img src="https://images.unsplash.com/photo-1617137968427-85924c800a22?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Designer Kurta">
-                </div>
-                <div class="seller-info">
-                    <h3>Designer Embroidered Kurta</h3>
-                    <p>Premium quality designer kurta with handcrafted embroidery. Limited edition collection.</p>
-                    <div class="seller-stats">
-                        <div class="sales-count">
-                            <i class="fas fa-shopping-cart"></i>
-                            <span>550+ sold</span>
-                        </div>
-                        <div class="rating">
-                            <i class="fas fa-star"></i>
-                            <span>4.8</span>
-                        </div>
-                    </div>
-                    <div class="seller-price">
-                        <div>
-                            <span class="old-price">Rs. 8,999</span>
-                            <span class="price">Rs. 6,499</span>
-                        </div>
-                        <button class="add-to-cart">
-                            <i class="fas fa-plus"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Categories Section -->
-    <section class="categories" id="categories">
-        <div class="section-title">
-            <h2>Shop By Category</h2>
-            <p>Find exactly what you're looking for in our organized collections</p>
-        </div>
-        <div class="categories-grid">
-            <div class="category-card">
-                <div class="category-icon">
-                    <i class="fas fa-tshirt"></i>
-                </div>
-                <h3>Kurtas</h3>
-                <p>Traditional & Modern Styles</p>
-            </div>
-            <div class="category-card">
-                <div class="category-icon">
-                    <i class="fas fa-vest"></i>
-                </div>
-                <h3>Shalwar Kameez</h3>
-                <p>Comfortable & Elegant</p>
-            </div>
-            <div class="category-card">
-                <div class="category-icon">
-                    <i class="fas fa-vest-patches"></i>
-                </div>
-                <h3>Waistcoats</h3>
-                <p>Formal & Casual</p>
-            </div>
-            <div class="category-card">
-                <div class="category-icon">
-                    <i class="fas fa-shoe-prints"></i>
-                </div>
-                <h3>Footwear</h3>
-                <p>Traditional & Modern</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- About Section -->
-    <section class="about" id="about">
-        <div class="about-img">
-            <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="About Us">
-        </div>
-        <div class="about-content">
-            <h2>Our Story</h2>
-            <p>VogueThreads was founded with a vision to redefine Pakistani fashion by blending timeless elegance with contemporary trends. We believe that clothing is not just about covering the body, but about expressing individuality and confidence.</p>
-            <p>Our team of fashion experts carefully curates each collection, ensuring that we offer the latest trends while maintaining timeless style.</p>
-            
-            <div class="features">
-                <div class="feature">
-                    <div class="feature-icon">
-                        <i class="fas fa-leaf"></i>
-                    </div>
-                    <div>
-                        <h4>Premium Fabrics</h4>
-                        <p>High-quality materials</p>
-                    </div>
-                </div>
-                <div class="feature">
-                    <div class="feature-icon">
-                        <i class="fas fa-award"></i>
-                    </div>
-                    <div>
-                        <h4>Authentic Designs</h4>
-                        <p>Traditional craftsmanship</p>
-                    </div>
-                </div>
-                <div class="feature">
-                    <div class="feature-icon">
-                        <i class="fas fa-truck"></i>
-                    </div>
-                    <div>
-                        <h4>Free Shipping</h4>
-                        <p>Across Pakistan</p>
-                    </div>
-                </div>
-                <div class="feature">
-                    <div class="feature-icon">
-                        <i class="fas fa-undo"></i>
-                    </div>
-                    <div>
-                        <h4>Easy Returns</h4>
-                        <p>7-day return policy</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Newsletter -->
-    <section class="newsletter">
-        <h2>Join Our Newsletter</h2>
-        <p>Subscribe to receive updates on new collections, exclusive offers, and style tips.</p>
-        <form class="newsletter-form">
-            <input type="email" class="newsletter-input" placeholder="Your email address" required>
-            <button type="submit" class="newsletter-btn">Subscribe</button>
-        </form>
     </section>
 
     <!-- Footer -->
     <footer id="contact">
-        <div class="footer-content">
-            <div class="footer-column">
-                <h3>VogueThreads</h3>
-                <p>Your one-stop destination for fashionable and affordable Pakistani clothing that combines style with comfort.</p>
-                <div class="social-links">
-                    <a href="#"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#"><i class="fab fa-twitter"></i></a>
-                    <a href="#"><i class="fab fa-instagram"></i></a>
-                    <a href="#"><i class="fab fa-pinterest"></i></a>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>About TechInsights</h3>
+                    <p>Your premier destination for cutting-edge technology insights, trends, and innovations that shape our digital future.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#blogs">Blogs</a></li>
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Categories</h3>
+                    <ul class="footer-links">
+                        <li><a href="#" class="category-link" data-category="ai">AI & Machine Learning</a></li>
+                        <li><a href="#" class="category-link" data-category="web">Web Development</a></li>
+                        <li><a href="#" class="category-link" data-category="cyber">Cybersecurity</a></li>
+                        <li><a href="#" class="category-link" data-category="iot">IoT</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Info</h3>
+                    <ul class="footer-links">
+                        <li>Email: <a href="mailto:hashirop911@gmail.com">hashirop911@gmail.com</a></li>
+                        <li>Follow us for updates</li>
+                    </ul>
                 </div>
             </div>
-            <div class="footer-column">
-                <h3>Quick Links</h3>
-                <ul>
-                    <li><a href="#">Home</a></li>
-                    <li><a href="#products">New Arrivals</a></li>
-                    <li><a href="#pakistan-sellers">Pakistan Best Sellers</a></li>
-                    <li><a href="#categories">Categories</a></li>
-                    <li><a href="#about">About Us</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                </ul>
+            <div class="copyright">
+                <p>&copy; 2023 TechInsights. All rights reserved.</p>
             </div>
-            <div class="footer-column">
-                <h3>Customer Service</h3>
-                <ul>
-                    <li><a href="#">Shipping Policy</a></li>
-                    <li><a href="#">Returns & Refunds</a></li>
-                    <li><a href="#">Size Guide</a></li>
-                    <li><a href="#">FAQs</a></li>
-                    <li><a href="#">Track Your Order</a></li>
-                </ul>
-            </div>
-            <div class="footer-column">
-                <h3>Contact Us</h3>
-                <ul>
-                    <li><i class="fas fa-phone"></i> 03187984997</li>
-                    <li><i class="fas fa-envelope"></i> hashirop911@gmail.com</li>
-                </ul>
-            </div>
-        </div>
-        <div class="copyright">
-            <p>&copy; 2023 VogueThreads. All rights reserved.</p>
         </div>
     </footer>
 
+    <!-- Login Modal -->
+    <div class="modal" id="loginModal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2 style="margin-bottom: 20px;">Login to Your Account</h2>
+            <div id="loginMessage" class="form-message"></div>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="loginEmail">Email Address</label>
+                    <input type="email" id="loginEmail" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
+                    <input type="password" id="loginPassword" class="form-control" required>
+                </div>
+                <button type="submit" class="btn btn-accent" style="width: 100%;">Login</button>
+            </form>
+            <p style="text-align: center; margin-top: 20px;">Don't have an account? <a href="#" id="switchToRegister" style="color: var(--primary);">Register here</a></p>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div class="modal" id="registerModal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2 style="margin-bottom: 20px;">Create an Account</h2>
+            <div id="registerMessage" class="form-message"></div>
+            <form id="registerForm">
+                <div class="form-group">
+                    <label for="registerName">Full Name</label>
+                    <input type="text" id="registerName" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerEmail">Email Address</label>
+                    <input type="email" id="registerEmail" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerPassword">Password</label>
+                    <input type="password" id="registerPassword" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerConfirmPassword">Confirm Password</label>
+                    <input type="password" id="registerConfirmPassword" class="form-control" required>
+                </div>
+                <button type="submit" class="btn btn-accent" style="width: 100%;">Register</button>
+            </form>
+            <p style="text-align: center; margin-top: 20px;">Already have an account? <a href="#" id="switchToLogin" style="color: var(--primary);">Login here</a></p>
+        </div>
+    </div>
+
     <script>
-        // Particle Animation
-        const canvas = document.getElementById('particle-canvas');
-        const ctx = canvas.getContext('2d');
-
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-
-        let particlesArray = [];
-
-        class Particle {
-            constructor() {
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height;
-                this.size = Math.random() * 2 + 1;
-                this.speedX = Math.random() * 1 - 0.5;
-                this.speedY = Math.random() * 1 - 0.5;
-                this.color = `rgba(${Math.floor(Math.random() * 100 + 155)}, ${Math.floor(Math.random() * 100 + 155)}, ${Math.floor(Math.random() * 255)}, ${Math.random() * 0.5 + 0.1})`;
-            }
-
-            update() {
-                this.x += this.speedX;
-                this.y += this.speedY;
-
-                if (this.x > canvas.width || this.x < 0) {
-                    this.speedX = -this.speedX;
-                }
-                if (this.y > canvas.height || this.y < 0) {
-                    this.speedY = -this.speedY;
-                }
-            }
-
-            draw() {
-                ctx.fillStyle = this.color;
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fill();
-            }
-        }
-
-        function init() {
-            particlesArray = [];
-            for (let i = 0; i < 150; i++) {
-                particlesArray.push(new Particle());
-            }
-        }
-
-        function animateParticles() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            for (let i = 0; i < particlesArray.length; i++) {
-                particlesArray[i].update();
-                particlesArray[i].draw();
-            }
-            requestAnimationFrame(animateParticles);
-        }
-
-        init();
-        animateParticles();
-
-        window.addEventListener('resize', function() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-            init();
-        });
-
-        // Custom Cursor
-        const cursor = document.querySelector('.cursor');
-        const cursorFollower = document.querySelector('.cursor-follower');
-
-        document.addEventListener('mousemove', (e) => {
-            cursor.style.left = e.clientX + 'px';
-            cursor.style.top = e.clientY + 'px';
-            
-            setTimeout(() => {
-                cursorFollower.style.left = e.clientX + 'px';
-                cursorFollower.style.top = e.clientY + 'px';
-            }, 100);
-        });
-
-        document.addEventListener('mousedown', () => {
-            cursor.style.transform = 'scale(0.7)';
-            cursorFollower.style.transform = 'scale(1.3)';
-        });
-
-        document.addEventListener('mouseup', () => {
-            cursor.style.transform = 'scale(1)';
-            cursorFollower.style.transform = 'scale(1)';
-        });
-
-        // Add hover effect to interactive elements
-        const interactiveElements = document.querySelectorAll('a, button, .product-card, .category-card, .add-to-cart, .seller-card');
-        
-        interactiveElements.forEach(element => {
-            element.addEventListener('mouseenter', () => {
-                cursor.style.transform = 'scale(1.5)';
-                cursorFollower.style.transform = 'scale(1.5)';
-                cursorFollower.style.borderColor = 'rgba(139, 95, 191, 0.8)';
-            });
-            
-            element.addEventListener('mouseleave', () => {
-                cursor.style.transform = 'scale(1)';
-                cursorFollower.style.transform = 'scale(1)';
-                cursorFollower.style.borderColor = 'rgba(255, 255, 255, 0.5)';
-            });
-        });
-
-        // Simple cart functionality
+        // Category Filter Functionality
         document.addEventListener('DOMContentLoaded', function() {
-            const addToCartButtons = document.querySelectorAll('.add-to-cart');
-            const cartCount = document.querySelector('.cart-count');
-            let count = 3; // Initial cart count
+            const categoryBtns = document.querySelectorAll('.category-btn');
+            const categoryLinks = document.querySelectorAll('.category-link');
+            const blogCards = document.querySelectorAll('.blog-card');
             
-            addToCartButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    count++;
-                    cartCount.textContent = count;
+            // Function to filter blog posts by category
+            function filterBlogs(category) {
+                blogCards.forEach(card => {
+                    if (category === 'all' || card.getAttribute('data-category') === category) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+                
+                // Update active state of category buttons
+                categoryBtns.forEach(btn => {
+                    if (btn.getAttribute('data-category') === category) {
+                        btn.classList.add('active');
+                    } else {
+                        btn.classList.remove('active');
+                    }
+                });
+            }
+            
+            // Add click event to category buttons
+            categoryBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const category = this.getAttribute('data-category');
+                    filterBlogs(category);
+                });
+            });
+            
+            // Add click event to category links in footer
+            categoryLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const category = this.getAttribute('data-category');
+                    filterBlogs(category);
                     
-                    // Add animation to the button
-                    this.style.background = '#4ecdc4';
-                    setTimeout(() => {
-                        this.style.background = '';
-                    }, 300);
+                    // Scroll to blog section
+                    document.getElementById('blogs').scrollIntoView({
+                        behavior: 'smooth'
+                    });
                 });
             });
         });
-    </script>
-</body>
-</html>
+
+        // Modal functionality
+        const loginBtn = document.getElementById('loginBtn');
+        const registerBtn = document.getElementById('registerBtn');
+        const loginModal = document.getElementById('loginModal');
+        const registerModal = document.getElementById('registerModal');
+        const closeButtons = document.querySelectorAll('.close-modal');
+        const switchToRegister = document.getElementById('switchToRegister');
+        const switchToLogin = document.getElementById('switchToLogin');
+        const loginMessage = document.getElementById('loginMessage');
+        const registerMessage = document.getElementById('registerMessage');
+        
+        // Open login modal
+        loginBtn.addEventListener('click', () => {
+            loginModal.style.display = 'flex';
+        });
+        
+        // Open register modal
+        registerBtn.addEventListener('click', () => {
+            registerModal.style.display = 'flex';
+        });
+        
+        // Close modals
+        closeButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                loginModal.style.display = 'none';
+                registerModal.style.display = 'none';
+            });
+        });
+        
+        // Switch between login and register modals
+        switchToRegister.addEventListener('click', (e) => {
+            e.preventDefault();
+            loginModal.style.display = 'none';
+            registerModal.style.display = 'flex';
+        });
+        
+        switchToLogin.addEventListener('click', (e) => {
+            e.preventDefault();
+            registerModal.style.display = 'none';
+            loginModal.style.display = 'flex';
+        });
+        
+        // Close modal when clicking outside
+        window.addEventListener('click', (e) => {
+            if (e.target === loginModal) {
+                loginModal.style.display = 'none';
+           
